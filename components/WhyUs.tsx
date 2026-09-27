@@ -5,6 +5,7 @@ import { gsap, prefersReducedMotion, registerGsap } from '@/lib/gsap';
 
 interface Pillar {
   number: string;
+  tag: string;
   title: string;
   description: string;
 }
@@ -12,27 +13,31 @@ interface Pillar {
 const PILLARS: Pillar[] = [
   {
     number: '01',
+    tag: 'Fleksibilitas PJJ',
     title: 'Ruang belajar yang mengikuti ritme hidup Anda.',
     description:
-      'Materi, diskusi, dan pendampingan dirancang untuk pendidikan jarak jauh. Anda bisa menata waktu kuliah tanpa meninggalkan pekerjaan, keluarga, atau tanggung jawab di komunitas.',
+      'Materi kuliah, forum diskusi, dan pendampingan akademik dirancang khusus untuk pembelajaran jarak jauh. Anda leluasa menata waktu studi tanpa meninggalkan pekerjaan, keluarga, atau amanah komunitas.',
   },
   {
     number: '02',
+    tag: 'Karakter & Moralitas',
     title: 'Ilmu yang berpijak pada nilai Islam berkemajuan.',
     description:
-      'Pendidikan di SiberMu menempatkan integritas, kepedulian sosial, dan daya pikir kritis sebagai bagian dari proses akademik, bukan pelengkap di akhir.',
+      'Pendidikan di SiberMu menempatkan integritas moral, kepedulian sosial, dan kemandirian berpikir kritis sebagai bagian utuh dari kultur akademik, bukan sekadar pelengkap formalitas.',
   },
   {
     number: '03',
+    tag: 'Relevansi Industri',
     title: 'Kurikulum untuk dunia kerja yang terus bergerak.',
     description:
-      'Program sarjana PJJ menghubungkan teori dengan kebutuhan praktik melalui pembelajaran terapan dan semangat Kampus Merdeka.',
+      'Setiap program sarjana PJJ menghubungkan pemahaman konseptual dengan studi kasus nyata, diperkuat semangat Kampus Merdeka untuk kesiapan karier profesional masa kini.',
   },
   {
     number: '04',
-    title: 'Biaya kuliah yang dapat direncanakan.',
+    tag: 'Akses Berkeadilan',
+    title: 'Biaya kuliah terencana dan dapat dicicil.',
     description:
-      'SiberMu menyediakan skema biaya yang terjangkau dan dapat dicicil, supaya pendidikan tinggi tidak berhenti pada batas ruang atau waktu.',
+      'SiberMu berkomitmen membuka akses pendidikan tinggi seluas-luasnya melalui skema biaya transparan yang dapat dicicil per semester, menjamin kepastian studi tanpa kendala finansial mendadak.',
   },
 ];
 
@@ -45,32 +50,30 @@ export default function WhyUs() {
     registerGsap();
     const mm = gsap.matchMedia();
     const ctx = gsap.context(() => {
-      // Pin desktop: satu nilai fokus per viewport agar narasi tidak terasa seperti kartu fitur.
       mm.add('(min-width: 768px)', () => {
         const panels = gsap.utils.toArray<HTMLElement>('[data-pillar]');
         gsap.to(panels, {
-          yPercent: -75,
+          yPercent: -70,
           ease: 'none',
           scrollTrigger: {
             trigger: '[data-pillars-track]',
             start: 'top top',
             end: 'bottom bottom',
-            scrub: 0.5,
+            scrub: 0.6,
           },
         });
       });
 
-      // Mobile: reveal kecil, tanpa pin agar scroll tetap ringan.
       mm.add('(max-width: 767px)', () => {
         gsap.from('[data-pillar]', {
           opacity: 0,
-          y: 24,
-          duration: 0.55,
+          y: 20,
+          duration: 0.5,
           stagger: 0.1,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: rootRef.current,
-            start: 'top 70%',
+            start: 'top 75%',
             once: true,
           },
         });
@@ -88,51 +91,73 @@ export default function WhyUs() {
       ref={rootRef}
       id="keunggulan"
       aria-labelledby="why-us-heading"
-      className="bg-background"
+      className="bg-[#F4F5F0] border-b border-primary/15"
     >
       <div className="mx-auto grid max-w-7xl md:grid-cols-[0.85fr_1.15fr] md:px-10">
-        <div className="px-5 py-section-sm md:sticky md:top-0 md:flex md:h-svh md:flex-col md:justify-center md:px-0 md:pr-16">
-          <p className="mb-5 font-body text-xs font-semibold uppercase tracking-[0.14em] text-primary">
-            Mengapa SiberMu
+        {/* Kolom Kiri: Pinned Sticky Title */}
+        <div className="px-5 py-section-sm md:sticky md:top-0 md:flex md:h-svh md:flex-col md:justify-center md:px-0 md:pr-12">
+          <p className="font-body text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-3">
+            Keunggulan SiberMu
           </p>
+
           <h2
             id="why-us-heading"
-            className="font-display text-display-xl font-medium text-text-primary"
+            className="font-display text-[clamp(1.85rem,3.2vw,2.5rem)] font-medium text-text-primary leading-tight"
           >
-            Pendidikan tinggi, tetap dekat dengan kehidupan nyata.
+            Pendidikan tinggi yang berakar pada kenyataan hidup.
           </h2>
-          <p className="mt-7 max-w-md font-body text-base leading-relaxed text-text-secondary">
-            Kuliah jarak jauh bukan soal memindahkan kelas ke layar. Ini soal membuka akses belajar yang tetap bermakna, terarah, dan manusiawi.
+
+          <p className="mt-5 max-w-md font-body text-sm leading-relaxed text-text-secondary">
+            Kuliah jarak jauh bukan sekadar memindahkan papan tulis ke layar digital. Ini tentang membuka akses belajar yang terstruktur, bermartabat, dan relevan dengan tantangan zaman.
           </p>
+
+          <div className="mt-8 hidden md:flex items-center gap-3 text-xs font-semibold text-text-secondary font-body">
+            <span className="h-px w-8 bg-accent-gold" />
+            <span>4 Pilar Utama Pembelajaran PJJ</span>
+          </div>
         </div>
 
-        <div data-pillars-track className="overflow-hidden border-l border-primary/20 bg-surface">
+        {/* Kolom Kanan: Pinned Scroll Track */}
+        <div data-pillars-track className="border-l border-primary/15 bg-surface/80">
           <div className="flex flex-col">
             {PILLARS.map((pillar, index) => (
               <article
                 key={pillar.number}
                 data-pillar
-                className="group relative flex min-h-[75svh] flex-col justify-between border-b border-primary/15 bg-surface p-6 sm:p-10 md:min-h-svh md:p-14 transition-colors hover:bg-background/40"
+                className="group relative flex min-h-[60svh] flex-col justify-between border-b border-primary/15 bg-surface p-6 sm:p-10 md:min-h-svh md:p-12 transition-colors duration-200 hover:bg-[#F9FAF6]"
               >
+                {/* Header Pilar */}
                 <div className="flex items-center justify-between border-b border-primary/10 pb-4">
-                  <span className="font-body text-xs font-semibold text-accent-gold uppercase tracking-[0.14em]">
-                    [ PILAR {pillar.number} ]
-                  </span>
-                  <span className="font-body text-xs text-text-secondary">
+                  <div className="flex items-center gap-3">
+                    <span className="font-display text-lg font-bold text-accent-gold">
+                      {pillar.number}
+                    </span>
+                    <span className="h-3 w-px bg-primary/20" />
+                    <span className="font-body text-xs font-semibold text-text-secondary uppercase tracking-wider">
+                      {pillar.tag}
+                    </span>
+                  </div>
+                  <span className="border border-primary/15 px-2.5 py-0.5 font-body text-[11px] text-text-secondary">
                     {index + 1} / {PILLARS.length}
                   </span>
                 </div>
-                <div className="max-w-xl">
-                  <h3 className="font-display text-display-lg font-medium text-text-primary group-hover:text-primary transition-colors">
+
+                {/* Konten Utama */}
+                <div className="my-auto py-6 max-w-xl">
+                  <h3 className="font-display text-xl sm:text-2xl font-medium text-text-primary transition-colors group-hover:text-primary">
                     {pillar.title}
                   </h3>
-                  <p className="mt-5 max-w-lg font-body text-base leading-relaxed text-text-secondary">
+                  <p className="mt-4 font-body text-sm leading-relaxed text-text-secondary">
                     {pillar.description}
                   </p>
                 </div>
-                <div className="flex items-center gap-3 font-body text-xs font-semibold uppercase tracking-[0.14em] text-text-secondary">
-                  <span className="h-px w-6 bg-accent-gold" />
-                  <span>Sistem Belajar SiberMu</span>
+
+                {/* Footer Pilar */}
+                <div className="flex items-center justify-between pt-4 border-t border-primary/10 font-body text-xs text-text-secondary">
+                  <span>Standar Akademik SiberMu</span>
+                  <span className="text-[11px] font-mono text-accent-gold font-semibold uppercase">
+                    Kampus Merdeka
+                  </span>
                 </div>
               </article>
             ))}

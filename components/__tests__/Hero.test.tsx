@@ -30,9 +30,10 @@ describe('Hero Component', () => {
     expect(anchor).toHaveAttribute('href', '#program');
   });
 
-  it('renders real educational photography image with descriptive alt', () => {
+  it('renders interactive academic program directory ledger', () => {
     render(<Hero />);
-    const image = screen.getByRole('img', { name: /mahasiswa belajar bersama menggunakan laptop/i });
-    expect(image).toBeInTheDocument();
+    expect(screen.getByLabelText(/direktori cepat program studi pjj sibermu/i)).toBeInTheDocument();
+    expect(screen.getByText(/direktori akademik/i)).toBeInTheDocument();
+    expect(screen.getByText(/6 program sarjana s1 pjj/i)).toBeInTheDocument();
   });
 });

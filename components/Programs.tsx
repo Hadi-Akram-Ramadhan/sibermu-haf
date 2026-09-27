@@ -31,7 +31,7 @@ const PROGRAMS: Program[] = [
     faculty: 'FTIK',
     facultyFull: 'Fakultas Teknologi dan Ilmu Kesehatan',
     description:
-      'Pengembangan perangkat lunak, arsitektur komputasi awan, dan kecerdasan buatan terapan berbasis proyek nyata.',
+      'Pengembangan perangkat lunak modern, arsitektur komputasi awan, dan kecerdasan buatan terapan berbasis proyek nyata.',
     focus: ['Rekayasa Perangkat Lunak', 'Kecerdasan Buatan', 'Cloud Computing'],
     career: ['Software Engineer', 'AI Specialist', 'Cloud Architect'],
   },
@@ -44,7 +44,7 @@ const PROGRAMS: Program[] = [
     faculty: 'FTIK',
     facultyFull: 'Fakultas Teknologi dan Ilmu Kesehatan',
     description:
-      'Menghubungkan strategi bisnis dengan solusi teknologi informasi, analitik data, dan tata kelola sistem digital.',
+      'Menghubungkan strategi bisnis dengan solusi teknologi informasi, analitika data, dan tata kelola sistem digital perusahaan.',
     focus: ['Analitik Data Bisnis', 'Manajemen Proyek TI', 'Tata Kelola Digital'],
     career: ['Business Analyst', 'Data Analyst', 'IT Project Manager'],
   },
@@ -57,7 +57,7 @@ const PROGRAMS: Program[] = [
     faculty: 'FTIK',
     facultyFull: 'Fakultas Teknologi dan Ilmu Kesehatan',
     description:
-      'Manajemen layanan kesehatan modern, sistem informasi rekam medis, dan kebijakan kesehatan masyarakat.',
+      'Manajemen tata kelola fasilitas layanan kesehatan modern, sistem informasi rekam medis, dan kepemimpinan klinis.',
     focus: ['Manajemen Faskes', 'Sistem Informasi Medis', 'Kebijakan Kesehatan'],
     career: ['Administrator RS/Klinik', 'Health Data Officer', 'Analis Kebijakan Faskes'],
   },
@@ -70,7 +70,7 @@ const PROGRAMS: Program[] = [
     faculty: 'FBH',
     facultyFull: 'Fakultas Bisnis dan Humaniora',
     description:
-      'Memadukan pemahaman hukum positif Indonesia dengan prinsip hukum Islam, mencetak sarjana hukum yang berintegritas.',
+      'Memadukan keahlian hukum positif Indonesia, hukum siber kontemporer, dan prinsip moral keadilan berkemajuan.',
     focus: ['Hukum Siber & Bisnis', 'Hukum Islam Terapan', 'Advokasi & Litigasi'],
     career: ['Legal Consultant', 'Corporate Counsel', 'Advokat / Praktisi Hukum'],
   },
@@ -83,7 +83,7 @@ const PROGRAMS: Program[] = [
     faculty: 'FBH',
     facultyFull: 'Fakultas Bisnis dan Humaniora',
     description:
-      'Kepemimpinan bisnis, strategi pemasaran digital, inovasi kewirausahaan, dan tata kelola perusahaan berkelanjutan.',
+      'Kepemimpinan strategis, akselerasi pemasaran digital, inovasi kewirausahaan, dan tata kelola organisasi berkelanjutan.',
     focus: ['Pemasaran Digital', 'Manajemen Keuangan', 'Kewirausahaan Berkelanjutan'],
     career: ['Business Development', 'Marketing Strategist', 'Wirausahawan Digital'],
   },
@@ -96,7 +96,7 @@ const PROGRAMS: Program[] = [
     faculty: 'FBH',
     facultyFull: 'Fakultas Bisnis dan Humaniora',
     description:
-      'Akuntansi keuangan digital, audit sistem informasi, perpajakan, dan pelaporan keuangan entitas syariah maupun publik.',
+      'Akuntansi keuangan digital, audit sistem informasi, perpajakan mutakhir, serta tata kelola keuangan entitas syariah dan publik.',
     focus: ['Akuntansi Forensik & Audit', 'Perpajakan Digital', 'Akuntansi Syariah'],
     career: ['Auditor Independen', 'Tax Consultant', 'Financial Controller'],
   },
@@ -126,24 +126,23 @@ export default function Programs() {
     <section
       id="program"
       aria-labelledby="programs-heading"
-      className="bg-surface py-section border-b border-primary/20"
+      className="bg-[#FAFAF7] py-section border-b border-primary/15"
     >
       <div className="mx-auto max-w-7xl px-5 md:px-10">
-        <div className="mb-6 flex items-center justify-between border-b border-primary/15 pb-3 font-body text-[11px] uppercase tracking-[0.14em] text-text-secondary">
-          <span>[ 02 / Program Studi ]</span>
-          <span className="hidden sm:inline">Pendidikan Jarak Jauh S1</span>
-        </div>
-
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        {/* Header Section */}
+        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between border-b border-primary/15 pb-8">
           <div>
+            <p className="font-body text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-3">
+              Program Sarjana S1 PJJ
+            </p>
             <h2
               id="programs-heading"
-              className="font-display text-[clamp(2.4rem,5vw,4.5rem)] font-medium text-text-primary leading-[1.05]"
+              className="font-display text-[clamp(1.85rem,3.5vw,2.75rem)] font-medium text-text-primary leading-tight"
             >
-              Enam jalur ilmu, <span className="italic text-primary font-normal">satu standar mutu.</span>
+              Enam jalur keilmuan, <span className="italic text-primary font-normal">satu standar mutu akademik.</span>
             </h2>
           </div>
-          <p className="max-w-md font-body text-base leading-relaxed text-text-secondary">
+          <p className="max-w-md font-body text-sm leading-relaxed text-text-secondary">
             Semua program studi diselenggarakan secara daring penuh dengan kurikulum yang diakui pemerintah dan Persyarikatan Muhammadiyah.
           </p>
         </div>
@@ -152,7 +151,7 @@ export default function Programs() {
         <div
           role="tablist"
           aria-label="Filter fakultas"
-          className="mt-12 flex flex-wrap gap-2 border-b border-primary/15 pb-4"
+          className="mt-8 flex flex-wrap gap-2 border-b border-primary/10 pb-4"
         >
           {FACULTIES.map((fac) => {
             const active = selectedFaculty === fac.id;
@@ -165,7 +164,7 @@ export default function Programs() {
                 aria-controls="programs-grid"
                 onClick={() => setSelectedFaculty(fac.id)}
                 className={[
-                  'px-4 py-2 text-xs font-body uppercase tracking-[0.12em] transition-colors focus-visible:rounded',
+                  'px-4 py-2 text-xs font-body font-semibold uppercase tracking-[0.12em] transition-colors focus-visible:rounded',
                   active
                     ? 'border-b-2 border-primary text-primary font-bold'
                     : 'text-text-secondary hover:text-text-primary',
@@ -177,46 +176,46 @@ export default function Programs() {
           })}
         </div>
 
-        {/* Grid kartu program studi dengan Physical Materiality (Awwwards SOTD deck) */}
+        {/* Grid kartu program studi */}
         <div
           id="programs-grid"
           role="tabpanel"
-          className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+          className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
-          {filteredPrograms.map((prog, index) => (
+          {filteredPrograms.map((prog) => (
             <article
               key={prog.name}
-              className="group relative flex flex-col justify-between border border-primary/20 bg-surface p-7 transition-all duration-200 hover:-translate-y-1 hover:border-primary hover:shadow-[0_8px_20px_-4px_rgba(11,93,59,0.12)] focus-within:border-primary"
+              className="group relative flex flex-col justify-between border border-primary/15 bg-surface p-7 transition-colors duration-150 hover:border-primary focus-within:border-primary"
             >
-
               <div>
-                <div className="flex items-baseline justify-between border-b border-primary/10 pb-4">
-                  <span className="font-body text-xs font-semibold tracking-wider text-accent-gold uppercase">
-                    [ {prog.degree} ]
+                <div className="flex items-center justify-between border-b border-primary/10 pb-3.5">
+                  <span className="font-mono text-xs font-semibold text-accent-gold">
+                    {prog.code}
                   </span>
-                  <span className="font-body text-xs font-semibold text-text-secondary">
-                    ( 0{index + 1} )
+                  <span className="border border-primary/20 bg-background px-2 py-0.5 font-body text-[11px] font-semibold text-primary">
+                    {prog.degree}
                   </span>
                 </div>
-                <h3 className="mt-5 font-display text-2xl font-medium text-text-primary group-hover:text-primary transition-colors">
+
+                <h3 className="mt-4 font-display text-xl sm:text-2xl font-medium text-text-primary transition-colors group-hover:text-primary">
                   {prog.name}
                 </h3>
-                <p className="mt-3 font-body text-sm leading-relaxed text-text-secondary">
+                <p className="mt-2.5 font-body text-xs sm:text-sm leading-relaxed text-text-secondary">
                   {prog.description}
                 </p>
               </div>
 
-              <div className="mt-8 border-t border-primary/10 pt-5">
-                <div className="flex items-center justify-between mb-3 text-[11px] font-body text-text-secondary">
-                  <span>Beban: <strong className="text-text-primary">{prog.credits}</strong></span>
+              <div className="mt-6 border-t border-primary/10 pt-4">
+                <div className="mb-3 flex items-center justify-between text-xs font-body text-text-secondary">
+                  <span>Beban: <strong className="text-text-primary font-mono">{prog.credits}</strong></span>
                   <span>Gelar: <strong className="text-primary font-semibold">{prog.titleDegree}</strong></span>
                 </div>
 
-                <ul className="m-0 p-0 list-none flex flex-wrap gap-1.5 mb-5" role="list">
+                <ul className="m-0 mb-4 flex flex-wrap gap-1.5 p-0 list-none" role="list">
                   {prog.focus.map((f) => (
                     <li
                       key={f}
-                      className="border border-primary/20 bg-surface px-2.5 py-1 font-body text-xs text-text-secondary"
+                      className="border border-primary/10 bg-background px-2.5 py-1 font-body text-[11px] text-text-secondary"
                     >
                       {f}
                     </li>
@@ -226,7 +225,7 @@ export default function Programs() {
                 <button
                   type="button"
                   onClick={() => setActiveBlueprint(prog)}
-                  className="w-full border border-primary/30 bg-transparent py-2.5 font-body text-xs font-semibold uppercase tracking-[0.12em] text-primary transition-colors hover:bg-primary hover:text-surface focus-visible:rounded"
+                  className="w-full border border-primary/30 bg-transparent py-2.5 font-body text-xs font-bold uppercase tracking-[0.12em] text-primary transition-colors hover:bg-primary hover:text-surface focus-visible:rounded"
                 >
                   Detail Kurikulum dan Karier
                 </button>
@@ -236,7 +235,7 @@ export default function Programs() {
         </div>
       </div>
 
-      {/* Blueprint Detail Modal / Drawer */}
+      {/* Blueprint Detail Modal Dialog */}
       {activeBlueprint && (
         <div
           role="dialog"
@@ -244,63 +243,66 @@ export default function Programs() {
           aria-labelledby="blueprint-title"
           className="fixed inset-0 z-50 flex items-center justify-center bg-text-primary/60 p-4 backdrop-blur-sm"
         >
-          <div className="relative w-full max-w-2xl border-2 border-primary bg-surface p-7 sm:p-10 shadow-[8px_8px_0_0_#0B5D3B]">
+          <div className="relative w-full max-w-2xl border-2 border-primary bg-surface p-6 sm:p-9 shadow-2xl">
             <button
               type="button"
               onClick={() => setActiveBlueprint(null)}
               aria-label="Tutup detail kurikulum"
-              className="absolute top-4 right-4 border border-primary/30 p-2 font-body text-xs font-bold text-text-primary hover:bg-primary hover:text-surface transition-colors focus-visible:rounded"
+              className="absolute top-5 right-5 border border-primary/20 px-3 py-1 font-body text-xs font-bold text-text-secondary transition-colors hover:bg-primary hover:text-surface focus-visible:rounded"
             >
               ✕ TUTUP
             </button>
 
-            <span className="font-body text-xs font-semibold uppercase tracking-[0.14em] text-accent-gold">
-              [ {activeBlueprint.code} • {activeBlueprint.degree} ]
+            <span className="font-mono text-xs font-semibold text-accent-gold uppercase tracking-wider">
+              {activeBlueprint.code} • {activeBlueprint.degree}
             </span>
-            <h3 id="blueprint-title" className="mt-2 font-display text-3xl font-medium text-text-primary">
+            <h3 id="blueprint-title" className="mt-1 font-display text-2xl sm:text-3xl font-medium text-text-primary">
               S1 PJJ {activeBlueprint.name}
             </h3>
             <p className="mt-1 font-body text-xs text-text-secondary">
               {activeBlueprint.facultyFull}
             </p>
 
-            <div className="mt-6 grid grid-cols-2 gap-4 border-y border-primary/15 py-4 font-body text-xs">
-              <div>
+            <div className="mt-5 grid grid-cols-2 gap-4 border-y border-primary/10 py-4 font-body text-xs">
+              <div className="border border-primary/10 bg-background p-3">
                 <span className="text-text-secondary block">Beban Studi Total</span>
-                <strong className="text-sm text-text-primary">{activeBlueprint.credits}</strong>
+                <strong className="text-sm text-text-primary font-mono">{activeBlueprint.credits}</strong>
               </div>
-              <div>
+              <div className="border border-primary/10 bg-background p-3">
                 <span className="text-text-secondary block">Gelar Akademik</span>
                 <strong className="text-sm text-primary">{activeBlueprint.titleDegree}</strong>
               </div>
             </div>
 
-            <div className="mt-6">
-              <p className="font-body text-xs font-semibold uppercase tracking-wider text-text-primary mb-2">
-                Peluang Profesi & Karier Lulusan
+            <div className="mt-5">
+              <p className="font-body text-xs font-semibold uppercase tracking-wider text-text-primary mb-2.5">
+                Peluang Profesi & Prospek Karier Lulusan:
               </p>
               <div className="flex flex-wrap gap-2">
                 {activeBlueprint.career.map((c) => (
-                  <span key={c} className="border border-primary/20 bg-background px-3 py-1 font-body text-xs text-text-primary">
-                    ✓ {c}
+                  <span
+                    key={c}
+                    className="border border-primary/20 bg-background px-3 py-1 font-body text-xs text-text-primary font-medium"
+                  >
+                    {c}
                   </span>
                 ))}
               </div>
             </div>
 
-            <div className="mt-8 flex gap-3">
+            <div className="mt-7 flex gap-3">
               <a
                 href={process.env.NEXT_PUBLIC_ADMISSIONS_URL ?? 'https://admissions.sibermu.ac.id/'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 bg-primary py-3 text-center font-body text-xs font-semibold uppercase tracking-[0.12em] text-surface hover:bg-primary-hover transition-colors focus-visible:rounded"
+                className="flex-1 bg-primary py-3 text-center font-body text-xs font-bold uppercase tracking-[0.12em] text-surface transition-colors hover:bg-primary-hover focus-visible:rounded"
               >
                 Daftar Program Studi Ini
               </a>
               <button
                 type="button"
                 onClick={() => setActiveBlueprint(null)}
-                className="border border-primary/30 px-5 py-3 font-body text-xs font-semibold uppercase tracking-[0.12em] text-text-primary hover:bg-background transition-colors focus-visible:rounded"
+                className="border border-primary/30 px-5 py-3 font-body text-xs font-semibold uppercase tracking-[0.12em] text-text-primary transition-colors hover:bg-background focus-visible:rounded"
               >
                 Kembali
               </button>
