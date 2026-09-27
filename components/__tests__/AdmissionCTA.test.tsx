@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import AdmissionCTA from '@/components/AdmissionCTA';
 
 describe('AdmissionCTA Component', () => {
@@ -23,9 +23,22 @@ describe('AdmissionCTA Component', () => {
     expect(emailLink).toHaveAttribute('href', 'mailto:humas@sibermu.ac.id');
   });
 
-  it('renders office address correctly', () => {
+  it('renders official campus address in Yogyakarta', () => {
     render(<AdmissionCTA />);
-    expect(screen.getByText(/HOS Cokroaminoto/i)).toBeInTheDocument();
+    expect(screen.getByText(/Kaliurang/i)).toBeInTheDocument();
     expect(screen.getByText(/Yogyakarta/i)).toBeInTheDocument();
+  });
+
+  it('toggles FAQ accordion answer on user click', () => {
+    render(<AdmissionCTA />);
+    const faqButton = screen.getByRole('button', { name: /apakah ijazah sibermu resmi/i });
+    expect(faqButton).toHaveAttribute('aria-expanded', 'false');
+
+    fireEvent.click(faqButton);
+    expect(faqButton).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByText(/izin kemendikbudristek ri no\. 430\/e\/o\/2021/i)).toBeInTheDocument();
+
+    fireEvent.click(faqButton);
+    expect(faqButton).toHaveAttribute('aria-expanded', 'false');
   });
 });

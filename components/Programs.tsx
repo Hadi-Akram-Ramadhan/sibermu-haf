@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Program {
   name: string;
@@ -111,6 +111,17 @@ export default function Programs() {
       ? PROGRAMS
       : PROGRAMS.filter((p) => p.faculty === selectedFaculty);
 
+  useEffect(() => {
+    if (!activeBlueprint) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setActiveBlueprint(null);
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [activeBlueprint]);
+
   return (
     <section
       id="program"
@@ -175,13 +186,8 @@ export default function Programs() {
           {filteredPrograms.map((prog, index) => (
             <article
               key={prog.name}
-              className="group relative flex flex-col justify-between border-2 border-primary/20 bg-background p-7 transition-all duration-200 hover:-translate-x-1 hover:-translate-y-1 hover:border-primary hover:shadow-[6px_6px_0_0_#0B5D3B] focus-within:border-primary"
+              className="group relative flex flex-col justify-between border border-primary/20 bg-surface p-7 transition-all duration-200 hover:-translate-y-1 hover:border-primary hover:shadow-[0_8px_20px_-4px_rgba(11,93,59,0.12)] focus-within:border-primary"
             >
-              {/* Corner brackets */}
-              <span className="absolute top-1 left-1 font-body text-[10px] text-primary/30 pointer-events-none select-none">┌</span>
-              <span className="absolute top-1 right-1 font-body text-[10px] text-primary/30 pointer-events-none select-none">┐</span>
-              <span className="absolute bottom-1 left-1 font-body text-[10px] text-primary/30 pointer-events-none select-none">└</span>
-              <span className="absolute bottom-1 right-1 font-body text-[10px] text-primary/30 pointer-events-none select-none">┘</span>
 
               <div>
                 <div className="flex items-baseline justify-between border-b border-primary/10 pb-4">
@@ -222,7 +228,7 @@ export default function Programs() {
                   onClick={() => setActiveBlueprint(prog)}
                   className="w-full border border-primary/30 bg-transparent py-2.5 font-body text-xs font-semibold uppercase tracking-[0.12em] text-primary transition-colors hover:bg-primary hover:text-surface focus-visible:rounded"
                 >
-                  Detail Kurikulum & Karier →
+                  Detail Kurikulum dan Karier
                 </button>
               </div>
             </article>
@@ -289,7 +295,7 @@ export default function Programs() {
                 rel="noopener noreferrer"
                 className="flex-1 bg-primary py-3 text-center font-body text-xs font-semibold uppercase tracking-[0.12em] text-surface hover:bg-primary-hover transition-colors focus-visible:rounded"
               >
-                Daftar Program Studi Ini →
+                Daftar Program Studi Ini
               </a>
               <button
                 type="button"

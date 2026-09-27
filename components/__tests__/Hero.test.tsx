@@ -30,8 +30,9 @@ describe('Hero Component', () => {
     expect(anchor).toHaveAttribute('href', '#program');
   });
 
-  it('contains visible placeholder text for photo asset', () => {
+  it('renders real educational photography image with descriptive alt', () => {
     render(<Hero />);
-    expect(screen.getByText(/foto kuliah daring sibermu/i)).toBeInTheDocument();
+    const image = screen.getByRole('img', { name: /mahasiswa belajar bersama menggunakan laptop/i });
+    expect(image).toBeInTheDocument();
   });
 });
