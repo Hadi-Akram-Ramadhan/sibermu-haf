@@ -84,6 +84,10 @@ export default function Stats() {
       className="bg-surface py-section border-b border-primary/10"
     >
       <div className="mx-auto max-w-7xl px-5 md:px-10">
+        <div className="mb-8 flex items-center justify-between border-b border-primary/15 pb-3 font-body text-[11px] uppercase tracking-[0.14em] text-text-secondary">
+          <span>[ 01 / Tentang SiberMu ]</span>
+          <span className="hidden sm:inline">Data institusi terverifikasi</span>
+        </div>
         {/* Heading asimetris, bukan centered title generik */}
         <div className="mb-16 grid gap-6 md:grid-cols-2 md:items-end">
           <h2

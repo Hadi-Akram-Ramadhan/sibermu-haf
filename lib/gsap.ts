@@ -23,7 +23,7 @@ export function registerGsap(): void {
  * Jika true: jangan jalankan animasi berat.
  */
 export function prefersReducedMotion(): boolean {
-  if (typeof window === 'undefined') return false;
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return false;
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 

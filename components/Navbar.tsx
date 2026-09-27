@@ -54,33 +54,48 @@ export default function Navbar() {
       ].join(' ')}
     >
       <nav
-        className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-10"
+        className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3.5 md:px-10"
         aria-label="Navigasi utama"
       >
-        {/* Logo */}
-        <Link
-          href="/"
-          className="flex items-center gap-2.5 font-display focus-visible:rounded"
-          aria-label="Universitas Siber Muhammadiyah, kembali ke beranda"
-        >
-          {/* Wordmark, siap diganti logo SVG/PNG */}
-          <span
+        {/* Logo & Status Readout */}
+        <div className="flex items-center gap-4">
+          <Link
+            href="/"
+            className="flex items-center gap-2.5 font-display focus-visible:rounded"
+            aria-label="Universitas Siber Muhammadiyah, kembali ke beranda"
+          >
+            {/* Wordmark, siap diganti logo SVG/PNG */}
+            <span
+              className={[
+                'text-xl font-semibold tracking-tight transition-colors duration-300',
+                scrolled ? 'text-primary' : 'text-surface',
+              ].join(' ')}
+            >
+              SiberMu
+            </span>
+            <span
+              className={[
+                'hidden sm:inline text-xs font-body font-normal uppercase tracking-widest transition-colors duration-300 mt-0.5',
+                scrolled ? 'text-text-secondary' : 'text-surface/70',
+              ].join(' ')}
+            >
+              Univ. Siber Muhammadiyah
+            </span>
+          </Link>
+
+          {/* Technical status indicator ala bleibtgleich */}
+          <div
             className={[
-              'text-xl font-semibold tracking-tight transition-colors duration-300',
-              scrolled ? 'text-primary' : 'text-surface',
+              'hidden lg:flex items-center gap-2 border-l pl-4 font-body text-[11px] uppercase tracking-[0.14em] transition-colors',
+              scrolled ? 'border-primary/15 text-text-secondary' : 'border-surface/20 text-surface/75',
             ].join(' ')}
           >
-            SiberMu
-          </span>
-          <span
-            className={[
-              'hidden sm:inline text-xs font-body font-normal uppercase tracking-widest transition-colors duration-300 mt-0.5',
-              scrolled ? 'text-text-secondary' : 'text-surface/70',
-            ].join(' ')}
-          >
-            Univ. Siber Muhammadiyah
-          </span>
-        </Link>
+            <span className="h-1.5 w-1.5 rounded-full bg-accent-gold" />
+            <span>PJJ Online</span>
+            <span className="text-accent-gold">/</span>
+            <span>Yogyakarta</span>
+          </div>
+        </div>
 
         {/* Nav links desktop */}
         <ul className="hidden md:flex items-center gap-8 list-none m-0 p-0" role="list">
@@ -89,7 +104,7 @@ export default function Navbar() {
               <Link
                 href={link.href}
                 className={[
-                  'font-body text-sm font-medium transition-colors duration-200 focus-visible:rounded',
+                  'font-body text-xs font-medium uppercase tracking-[0.12em] transition-colors duration-200 focus-visible:rounded',
                   scrolled
                     ? 'text-text-secondary hover:text-primary'
                     : 'text-surface/80 hover:text-surface',
@@ -107,7 +122,7 @@ export default function Navbar() {
           target="_blank"
           rel="noopener noreferrer"
           className={[
-            'hidden md:inline-flex items-center px-5 py-2.5 text-sm font-body font-semibold',
+            'hidden md:inline-flex items-center px-4 py-2 text-xs font-body font-semibold uppercase tracking-[0.12em]',
             'border transition-colors duration-200 focus-visible:rounded',
             scrolled
               ? 'border-primary text-primary hover:bg-primary hover:text-surface'

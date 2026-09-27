@@ -66,14 +66,15 @@ export default function AdmissionCTA() {
           </div>
         </div>
 
-        {/* Empat jalur masuk, grid asimetris bukan 4 kolom identik */}
-        <div className="grid gap-px bg-primary/10 border border-primary/10 sm:grid-cols-2">
-          {ADMISSION_PATHS.map((path) => (
-            <div key={path.id} className="bg-surface p-8 md:p-10">
-              <h3 className="font-display text-xl font-medium text-primary">
+        {/* Empat jalur masuk, disusun seperti index editorial */}
+        <div className="border-y border-primary/20">
+          {ADMISSION_PATHS.map((path, index) => (
+            <div key={path.id} className="group grid gap-4 border-b border-primary/15 p-6 last:border-b-0 md:grid-cols-[0.15fr_0.85fr_1.7fr] md:items-center md:p-8 transition-colors hover:bg-surface">
+              <span className="font-body text-xs font-semibold tracking-[0.14em] text-accent-gold">( 0{index + 1} )</span>
+              <h3 className="font-display text-xl font-medium text-primary group-hover:translate-x-1 transition-transform">
                 {path.title}
               </h3>
-              <p className="mt-3 font-body text-sm leading-relaxed text-text-secondary">
+              <p className="font-body text-sm leading-relaxed text-text-secondary">
                 {path.description}
               </p>
             </div>

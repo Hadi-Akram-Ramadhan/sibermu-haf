@@ -35,7 +35,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" className={`${fraunces.variable} ${plusJakartaSans.variable}`}>
-      <body className="min-h-screen bg-background text-text-primary antialiased">
+      <body className="min-h-screen bg-background text-text-primary antialiased paper-grain">
         {children}
       </body>
     </html>

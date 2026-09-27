@@ -106,28 +106,34 @@ export default function WhyUs() {
           </p>
         </div>
 
-        <div data-pillars-track className="overflow-hidden border-l border-primary/10">
+        <div data-pillars-track className="overflow-hidden border-l border-primary/20 bg-surface">
           <div className="flex flex-col">
             {PILLARS.map((pillar, index) => (
               <article
                 key={pillar.number}
                 data-pillar
-                className="flex min-h-[75svh] flex-col justify-between border-b border-primary/10 bg-surface p-6 sm:p-10 md:min-h-svh md:p-14"
+                className="group relative flex min-h-[75svh] flex-col justify-between border-b border-primary/15 bg-surface p-6 sm:p-10 md:min-h-svh md:p-14 transition-colors hover:bg-background/40"
               >
-                <span className="font-body text-sm font-semibold text-accent-gold">
-                  {pillar.number}
-                </span>
+                <div className="flex items-center justify-between border-b border-primary/10 pb-4">
+                  <span className="font-body text-xs font-semibold text-accent-gold uppercase tracking-[0.14em]">
+                    [ PILAR {pillar.number} ]
+                  </span>
+                  <span className="font-body text-xs text-text-secondary">
+                    {index + 1} / {PILLARS.length}
+                  </span>
+                </div>
                 <div className="max-w-xl">
-                  <h3 className="font-display text-display-lg font-medium text-text-primary">
+                  <h3 className="font-display text-display-lg font-medium text-text-primary group-hover:text-primary transition-colors">
                     {pillar.title}
                   </h3>
                   <p className="mt-5 max-w-lg font-body text-base leading-relaxed text-text-secondary">
                     {pillar.description}
                   </p>
                 </div>
-                <p className="font-body text-xs font-medium uppercase tracking-[0.12em] text-text-secondary">
-                  Nilai {index + 1} dari {PILLARS.length}
-                </p>
+                <div className="flex items-center gap-3 font-body text-xs font-semibold uppercase tracking-[0.14em] text-text-secondary">
+                  <span className="h-px w-6 bg-accent-gold" />
+                  <span>Sistem Belajar SiberMu</span>
+                </div>
               </article>
             ))}
           </div>
