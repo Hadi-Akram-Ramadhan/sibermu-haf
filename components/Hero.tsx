@@ -17,6 +17,7 @@
  * Accessibility: prefers-reduced-motion fallback lengkap.
  */
 
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { gsap, prefersReducedMotion, registerGsap } from '@/lib/gsap';
 
@@ -109,8 +110,7 @@ export default function Hero() {
     registerGsap();
 
     const ctx = gsap.context(() => {
-      // 1. Scroll-reveal per baris headline — clip dari bawah ke atas
-      // Alasan: teks reveal per baris lebih editorial daripada opacity polos.
+      // 1. Scroll-reveal per baris headline
       gsap.from('.hero-line', {
         yPercent: 105,
         opacity: 0,
@@ -130,11 +130,10 @@ export default function Hero() {
         delay: 0.45,
       });
 
-      // 3. Parallax halus pada ledger card — memberi kedalaman tanpa mengalihkan
-      // Alasan: panel direktori bergerak lebih lambat dari halaman = kedalaman material.
+      // 3. Parallax halus pada ledger card
       if (ledgerRef.current) {
         gsap.to(ledgerRef.current, {
-          y: -30,
+          y: -24,
           ease: 'none',
           scrollTrigger: {
             trigger: rootRef.current,
@@ -145,11 +144,10 @@ export default function Hero() {
         });
       }
 
-      // 4. Headline subtle opacity scrub saat scroll (anchor visual teks)
-      // Alasan: teks besar jadi "kilas pandang" saat user scroll, bukan menghilang tiba-tiba.
+      // 4. Headline subtle opacity scrub saat scroll
       if (headlineRef.current) {
         gsap.to(headlineRef.current, {
-          opacity: 0.15,
+          opacity: 0.2,
           ease: 'none',
           scrollTrigger: {
             trigger: rootRef.current,
@@ -167,11 +165,10 @@ export default function Hero() {
   return (
     <section
       ref={rootRef}
-      className="relative min-h-[90vh] bg-[#F7F8F4] pt-24 pb-16 md:pt-32 md:pb-24 border-b border-primary/15 overflow-hidden"
+      className="relative min-h-[92vh] bg-[#F7F8F4] pt-24 pb-16 md:pt-32 md:pb-24 border-b border-primary/15 overflow-hidden"
       aria-labelledby="hero-heading"
     >
-      {/* Ambient backdrop: specular light corner — material depth, bukan dekorasi */}
-      {/* Alasan: off-white hangat butuh sedikit kedalaman agar tidak tampak rata dan murahan. */}
+      {/* Ambient backdrop */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute right-0 top-0 h-[60%] w-[45%] opacity-[0.04]"
@@ -191,18 +188,20 @@ export default function Hero() {
       </div>
 
       {/* Grid Dua Kolom Editorial */}
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 md:grid-cols-[1.1fr_0.9fr] md:gap-14 md:px-10">
-
-        {/* Kolom Kiri: Tipografi Editorial */}
-        <div className="flex flex-col justify-center">
-          <p className="font-body text-xs font-semibold uppercase tracking-[0.14em] text-primary mb-4 hero-line">
-            Universitas Siber Muhammadiyah
-          </p>
+      <div className="mx-auto grid max-w-7xl items-start gap-12 px-5 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 md:px-10">
+        {/* Kolom Kiri: Tipografi Editorial & Value Proposition */}
+        <div className="flex flex-col justify-center pt-2">
+          <div className="inline-flex items-center gap-2 mb-4 hero-line">
+            <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
+            <p className="font-body text-xs font-semibold uppercase tracking-[0.14em] text-primary">
+              Universitas Siber Muhammadiyah
+            </p>
+          </div>
 
           <h1
             id="hero-heading"
             ref={headlineRef}
-            className="leading-[1.1] tracking-tight"
+            className="leading-[1.12] tracking-tight"
           >
             <div className="overflow-hidden">
               <span className="block hero-line font-display text-[clamp(2.25rem,4.2vw,3.75rem)] font-medium text-text-primary">
@@ -221,14 +220,14 @@ export default function Hero() {
             </div>
           </h1>
 
-          <p className="mt-6 max-w-lg font-body text-base leading-relaxed text-text-secondary hero-detail">
+          <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-text-secondary hero-detail">
             Kuliah Sarjana S1 daring penuh dengan fleksibilitas total. Dirancang bagi Anda yang
-            ingin meraih gelar akademik resmi tanpa meninggalkan karier, keluarga, atau pengabdian.
+            ingin meraih gelar akademik resmi tanpa meninggalkan karier, keluarga, atau pengabdian masyarakat.
           </p>
 
-          {/* Legalitas — informasional, bukan dekoratif */}
+          {/* Legalitas Resmi Terverifikasi */}
           <dl className="mt-6 grid max-w-lg grid-cols-2 gap-4 border-t border-primary/15 pt-6 hero-detail">
-            <div className="border-l-2 border-primary pl-4">
+            <div className="border-l-2 border-primary pl-4 bg-surface/50 py-2">
               <dt className="font-body text-[11px] uppercase tracking-[0.1em] text-text-secondary">
                 Izin Kemendikbudristek
               </dt>
@@ -236,7 +235,7 @@ export default function Hero() {
                 SK No. 430/E/O/2021
               </dd>
             </div>
-            <div className="border-l-2 border-accent-gold pl-4">
+            <div className="border-l-2 border-accent-gold pl-4 bg-surface/50 py-2">
               <dt className="font-body text-[11px] uppercase tracking-[0.1em] text-text-secondary">
                 Akreditasi Institusi
               </dt>
@@ -250,57 +249,87 @@ export default function Hero() {
               href={ADMISSIONS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-12 items-center justify-center bg-primary px-7 py-3.5 font-body text-xs font-bold uppercase tracking-[0.12em] text-surface transition-colors hover:bg-primary-hover focus-visible:rounded"
+              className="inline-flex min-h-12 items-center justify-center bg-primary px-8 py-3.5 font-body text-xs font-bold uppercase tracking-[0.12em] text-surface transition-all duration-200 hover:bg-primary-hover shadow-[4px_4px_0_0_#072C1C] hover:shadow-[2px_2px_0_0_#072C1C] hover:translate-x-[2px] hover:translate-y-[2px] focus-visible:rounded"
             >
               Daftar Mahasiswa Baru
             </a>
             <a
               href="#program"
-              className="inline-flex min-h-12 items-center justify-center border border-primary/30 bg-surface px-7 py-3.5 font-body text-xs font-bold uppercase tracking-[0.12em] text-primary transition-colors hover:border-primary hover:bg-background focus-visible:rounded"
+              className="inline-flex min-h-12 items-center justify-center border-2 border-primary/30 bg-surface px-7 py-3.5 font-body text-xs font-bold uppercase tracking-[0.12em] text-primary transition-all duration-200 hover:border-primary hover:bg-[#F2F4EF] focus-visible:rounded"
             >
               Lihat Program Studi
             </a>
           </div>
+
+          <p className="mt-4 font-body text-xs text-text-secondary hero-detail flex items-center gap-2">
+            <span className="font-mono text-primary font-semibold">[i]</span>
+            Biaya kuliah transparan dapat dicicil per semester tanpa pungutan gedung tambahan.
+          </p>
         </div>
 
-        {/* Kolom Kanan: Direktori Akademik Interaktif */}
-        {/* Reflective: border hairline + light sweep on hover via CSS group */}
-        <div ref={ledgerRef} className="hero-detail">
+        {/* Kolom Kanan: Editorial Showcase (Fotografi Mahasiswa PJJ + Direktori Terintegrasi) */}
+        <div ref={ledgerRef} className="hero-detail flex flex-col gap-5">
+          {/* 1. Frame Fotografi Mahasiswa PJJ SiberMu */}
+          <div className="group relative border-2 border-primary/20 bg-surface p-2.5 shadow-[6px_6px_0_0_#0B5D3B] transition-all duration-300 hover:shadow-[8px_8px_0_0_#0B5D3B]">
+            {/* Corner Crosshairs Tactile Editorial */}
+            <span className="absolute -top-1.5 -left-1.5 font-mono text-xs font-bold text-primary select-none" aria-hidden="true">+</span>
+            <span className="absolute -top-1.5 -right-1.5 font-mono text-xs font-bold text-primary select-none" aria-hidden="true">+</span>
+            <span className="absolute -bottom-1.5 -left-1.5 font-mono text-xs font-bold text-primary select-none" aria-hidden="true">+</span>
+            <span className="absolute -bottom-1.5 -right-1.5 font-mono text-xs font-bold text-primary select-none" aria-hidden="true">+</span>
+
+            <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden bg-background">
+              <Image
+                src="/images/hero-student-indonesia.jpg"
+                alt="Mahasiswi Universitas Siber Muhammadiyah sedang belajar mandiri melalui laptop dalam program perkuliahan daring PJJ"
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 45vw, 550px"
+                className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              />
+
+              {/* Badges Material di atas foto */}
+              <div className="absolute top-3 left-3 flex items-center gap-2 border border-primary/20 bg-surface/95 px-3 py-1 font-body text-[11px] font-semibold uppercase tracking-wider text-text-primary shadow-sm backdrop-blur-sm">
+                <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
+                <span>Pendidikan Jarak Jauh (PJJ)</span>
+              </div>
+
+              <div className="absolute bottom-3 right-3 border border-primary/20 bg-surface/95 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-text-secondary shadow-sm backdrop-blur-sm">
+                [ Yogyakarta / Online ]
+              </div>
+            </div>
+
+            {/* Micro Caption Editorial */}
+            <div className="mt-2.5 flex items-center justify-between px-2 py-1 text-[11px] font-body text-text-secondary">
+              <span className="font-semibold text-text-primary">
+                Fleksibel, Terarah, dan Terakreditasi
+              </span>
+              <span>100% Berbasis Daring</span>
+            </div>
+          </div>
+
+          {/* 2. Direktori Program Studi Terpadu */}
           <div
-            className="group relative border border-primary/20 bg-surface p-6 sm:p-7 overflow-hidden
-                        shadow-[0_4px_24px_-6px_rgba(11,93,59,0.07)]
-                        transition-[border-color,shadow] duration-300
-                        hover:border-primary/35 hover:shadow-[0_6px_32px_-6px_rgba(11,93,59,0.12)]"
+            className="border-2 border-primary/20 bg-surface p-5 sm:p-6 shadow-[4px_4px_0_0_rgba(11,93,59,0.15)] transition-[border-color,shadow] duration-300 hover:border-primary/40"
             aria-label="Direktori Cepat Program Studi PJJ SiberMu"
           >
-            {/* Specular sheen: light sweep diagonal saat hover — material matte, bukan glow */}
-            {/* Alasan: efek material pada surface kartu memberi kesan premium tanpa neon. */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-16deg]
-                         bg-gradient-to-r from-transparent via-white/40 to-transparent
-                         opacity-0 transition-[opacity,transform] duration-700 ease-in-out
-                         group-hover:translate-x-[200%] group-hover:opacity-100"
-            />
-
             {/* Header Direktori */}
-            <div className="flex items-center justify-between border-b border-primary/15 pb-4">
+            <div className="flex items-center justify-between border-b border-primary/15 pb-3">
               <div>
                 <span className="font-body text-[11px] font-semibold uppercase tracking-[0.14em] text-primary">
                   Direktori Akademik
                 </span>
-                <h2 className="mt-1 font-display text-lg font-medium text-text-primary">
+                <h2 className="mt-0.5 font-display text-base sm:text-lg font-medium text-text-primary">
                   6 Program Sarjana S1 PJJ
                 </h2>
               </div>
-              <span className="border border-primary/20 bg-background px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-text-secondary">
+              <span className="border border-primary/20 bg-[#F2F4EF] px-2.5 py-1 font-body text-[10px] font-bold uppercase tracking-wider text-primary">
                 100% Online
               </span>
             </div>
 
             {/* Filter Tab Fakultas */}
             <div
-              className="mt-4 flex gap-1.5 border-b border-primary/10 pb-3"
+              className="mt-3 flex gap-1.5 border-b border-primary/10 pb-2.5"
               role="tablist"
               aria-label="Filter fakultas hero"
             >
@@ -316,7 +345,7 @@ export default function Hero() {
                     className={[
                       'px-3 py-1 text-xs font-body font-semibold tracking-wider transition-colors focus-visible:rounded',
                       isActive
-                        ? 'border-b-2 border-primary text-primary font-bold'
+                        ? 'border-b-2 border-primary text-primary font-bold bg-[#F2F4EF]/60'
                         : 'text-text-secondary hover:text-text-primary',
                     ].join(' ')}
                   >
@@ -327,7 +356,7 @@ export default function Hero() {
             </div>
 
             {/* Daftar Program */}
-            <ul className="mt-4 divide-y divide-primary/10 list-none m-0 p-0" role="list">
+            <ul className="mt-2 divide-y divide-primary/10 list-none m-0 p-0" role="list">
               {filteredPrograms.map((prog) => {
                 const isHovered = hoveredProgram === prog.id;
                 return (
@@ -335,16 +364,15 @@ export default function Hero() {
                     key={prog.id}
                     onMouseEnter={() => setHoveredProgram(prog.id)}
                     className={[
-                      'group/item cursor-pointer py-3 px-2.5 transition-colors duration-150',
+                      'group/item cursor-pointer py-2.5 px-2 transition-colors duration-150',
                       isHovered ? 'bg-[#F2F4EF]' : 'hover:bg-[#F7F8F4]',
                     ].join(' ')}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-baseline gap-2">
-                        {/* Indikator aktif: garis kiri kecil saat hovered */}
                         <span
                           className={[
-                            'inline-block w-0.5 self-stretch rounded-full transition-colors duration-150',
+                            'inline-block w-1 h-3 self-center rounded-sm transition-colors duration-150',
                             isHovered ? 'bg-primary' : 'bg-transparent',
                           ].join(' ')}
                           aria-hidden="true"
@@ -356,13 +384,13 @@ export default function Hero() {
                           ({prog.degree})
                         </span>
                       </div>
-                      <span className="font-body text-[11px] font-medium text-text-secondary">
+                      <span className="font-mono text-[11px] font-semibold text-text-secondary">
                         {prog.sks}
                       </span>
                     </div>
 
                     {isHovered && (
-                      <p className="mt-1.5 ml-3 font-body text-[11px] leading-relaxed text-text-secondary">
+                      <p className="mt-1 ml-3 font-body text-[11px] leading-relaxed text-text-secondary">
                         Fokus: {prog.focus}
                       </p>
                     )}
@@ -372,9 +400,14 @@ export default function Hero() {
             </ul>
 
             {/* Footer Direktori */}
-            <div className="mt-5 border-t border-primary/15 pt-3.5 flex items-center justify-between text-[11px] font-body text-text-secondary">
+            <div className="mt-3.5 border-t border-primary/15 pt-2.5 flex items-center justify-between text-[11px] font-body text-text-secondary">
               <span>Kurikulum Kampus Merdeka</span>
-              <span className="font-semibold text-primary">Biaya Dapat Dicicil</span>
+              <a
+                href="#program"
+                className="font-semibold text-primary hover:underline"
+              >
+                Rincian Kurikulum Lengkap
+              </a>
             </div>
           </div>
         </div>

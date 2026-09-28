@@ -177,61 +177,81 @@ export default function Programs() {
         </div>
 
         {/* Grid kartu program studi */}
+        {/* Grid kartu program studi */}
         <div
           id="programs-grid"
           role="tabpanel"
           className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
-          {filteredPrograms.map((prog) => (
-            <article
-              key={prog.name}
-              className="group relative flex flex-col justify-between border border-primary/15 bg-surface p-7 transition-colors duration-150 hover:border-primary focus-within:border-primary"
-            >
-              <div>
-                <div className="flex items-center justify-between border-b border-primary/10 pb-3.5">
-                  <span className="font-mono text-xs font-semibold text-accent-gold">
-                    {prog.code}
-                  </span>
-                  <span className="border border-primary/20 bg-background px-2 py-0.5 font-body text-[11px] font-semibold text-primary">
-                    {prog.degree}
-                  </span>
-                </div>
+          {filteredPrograms.map((prog) => {
+            const isFtik = prog.faculty === 'FTIK';
+            return (
+              <article
+                key={prog.name}
+                className={[
+                  'group relative flex flex-col justify-between border-2 bg-surface p-7',
+                  'transition-all duration-200 hover:-translate-y-1',
+                  isFtik
+                    ? 'border-primary/20 hover:border-primary shadow-[4px_4px_0_0_rgba(11,93,59,0.12)] hover:shadow-[6px_6px_0_0_#0B5D3B]'
+                    : 'border-primary/20 hover:border-accent-gold shadow-[4px_4px_0_0_rgba(131,93,18,0.12)] hover:shadow-[6px_6px_0_0_#835D12]',
+                ].join(' ')}
+              >
+                {/* Corner Crosshairs */}
+                <span className="absolute top-2 right-2 font-mono text-[10px] text-primary/30 select-none" aria-hidden="true">+</span>
 
-                <h3 className="mt-4 font-display text-xl sm:text-2xl font-medium text-text-primary transition-colors group-hover:text-primary">
-                  {prog.name}
-                </h3>
-                <p className="mt-2.5 font-body text-xs sm:text-sm leading-relaxed text-text-secondary">
-                  {prog.description}
-                </p>
-              </div>
-
-              <div className="mt-6 border-t border-primary/10 pt-4">
-                <div className="mb-3 flex items-center justify-between text-xs font-body text-text-secondary">
-                  <span>Beban: <strong className="text-text-primary font-mono">{prog.credits}</strong></span>
-                  <span>Gelar: <strong className="text-primary font-semibold">{prog.titleDegree}</strong></span>
-                </div>
-
-                <ul className="m-0 mb-4 flex flex-wrap gap-1.5 p-0 list-none" role="list">
-                  {prog.focus.map((f) => (
-                    <li
-                      key={f}
-                      className="border border-primary/10 bg-background px-2.5 py-1 font-body text-[11px] text-text-secondary"
+                <div>
+                  <div className="flex items-center justify-between border-b border-primary/10 pb-3.5">
+                    <span className="font-mono text-xs font-bold text-accent-gold tracking-wide">
+                      {prog.code}
+                    </span>
+                    <span
+                      className={[
+                        'border px-2.5 py-0.5 font-body text-[10px] font-bold uppercase tracking-wider',
+                        isFtik
+                          ? 'border-primary/20 bg-primary/5 text-primary'
+                          : 'border-accent-gold/30 bg-accent-gold/5 text-accent-gold',
+                      ].join(' ')}
                     >
-                      {f}
-                    </li>
-                  ))}
-                </ul>
+                      {prog.faculty} • {prog.degree}
+                    </span>
+                  </div>
 
-                <button
-                  type="button"
-                  onClick={() => setActiveBlueprint(prog)}
-                  className="w-full border border-primary/30 bg-transparent py-2.5 font-body text-xs font-bold uppercase tracking-[0.12em] text-primary transition-colors hover:bg-primary hover:text-surface focus-visible:rounded"
-                >
-                  Detail Kurikulum dan Karier
-                </button>
-              </div>
-            </article>
-          ))}
+                  <h3 className="mt-4 font-display text-xl sm:text-2xl font-medium text-text-primary transition-colors group-hover:text-primary">
+                    {prog.name}
+                  </h3>
+                  <p className="mt-2.5 font-body text-xs sm:text-sm leading-relaxed text-text-secondary">
+                    {prog.description}
+                  </p>
+                </div>
+
+                <div className="mt-6 border-t border-primary/10 pt-4">
+                  <div className="mb-3 flex items-center justify-between text-xs font-body text-text-secondary">
+                    <span>Beban: <strong className="text-text-primary font-mono">{prog.credits}</strong></span>
+                    <span>Gelar: <strong className="text-primary font-bold">{prog.titleDegree}</strong></span>
+                  </div>
+
+                  <ul className="m-0 mb-4 flex flex-wrap gap-1.5 p-0 list-none" role="list">
+                    {prog.focus.map((f) => (
+                      <li
+                        key={f}
+                        className="border border-primary/10 bg-background px-2.5 py-1 font-body text-[11px] text-text-secondary font-medium"
+                      >
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveBlueprint(prog)}
+                    className="w-full border-2 border-primary/30 bg-surface py-2.5 font-body text-xs font-bold uppercase tracking-[0.12em] text-primary transition-all duration-150 hover:bg-primary hover:text-surface hover:border-primary focus-visible:rounded"
+                  >
+                    Detail Kurikulum dan Karier
+                  </button>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
 

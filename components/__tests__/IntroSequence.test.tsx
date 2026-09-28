@@ -38,22 +38,26 @@ describe('IntroSequence Component (Zero.university inspired)', () => {
     ).toBeInTheDocument();
   });
 
-  it('renders statement segments with Fraunces typography', () => {
+  it('renders statement segments and academic telemetry', () => {
     vi.mocked(prefersReducedMotion).mockReturnValue(false);
     render(<IntroSequence onComplete={vi.fn()} />);
 
-    expect(screen.getByText('Kuliah')).toBeInTheDocument();
-    expect(screen.getByText('di mana saja.')).toBeInTheDocument();
-    expect(screen.getByText('Ijazah')).toBeInTheDocument();
-    expect(screen.getByText('yang nyata.')).toBeInTheDocument();
+    expect(screen.getByText(/Kuliah di mana saja/i)).toBeInTheDocument();
+    expect(screen.getByText(/ijazah yang nyata/i)).toBeInTheDocument();
+    expect(screen.getByText('SK 430/E/O/2021')).toBeInTheDocument();
+    expect(screen.getByText('BAN-PT (BAIK)')).toBeInTheDocument();
   });
 
-  it('renders scroll-to-reveal prompt', () => {
+  it('renders portal action button and scroll prompt, and responds to click', () => {
+    const onCompleteMock = vi.fn();
     vi.mocked(prefersReducedMotion).mockReturnValue(false);
-    render(<IntroSequence onComplete={vi.fn()} />);
+    render(<IntroSequence onComplete={onCompleteMock} />);
 
-    expect(screen.getByText(/gulir untuk membuka/i)).toBeInTheDocument();
-    expect(screen.getByRole('progressbar')).toBeInTheDocument();
+    const portalBtn = screen.getByRole('button', { name: /masuk ke portal/i });
+    expect(portalBtn).toBeInTheDocument();
+    expect(
+      screen.getByText(/atau gulir layar untuk melanjutkan/i)
+    ).toBeInTheDocument();
   });
 
   it('immediately triggers onComplete when prefers-reduced-motion is active', () => {

@@ -94,16 +94,24 @@ export default function AdmissionCTA() {
         </div>
 
         {/* 4 Jalur Pendaftaran dengan Architectural Index Grid */}
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {ADMISSION_PATHS.map((path, index) => (
             <article
               key={path.id}
-              className="group flex flex-col justify-between border border-primary/15 bg-surface p-6 transition-colors duration-150 hover:border-primary"
+              className="group relative flex flex-col justify-between border-2 border-primary/20 bg-surface p-6 transition-all duration-200 hover:-translate-y-1 shadow-[4px_4px_0_0_rgba(11,93,59,0.1)] hover:shadow-[6px_6px_0_0_#0B5D3B]"
             >
+              <span className="absolute top-2 right-2 font-mono text-[10px] text-primary/30 select-none" aria-hidden="true">+</span>
+
               <div>
-                <span className="font-display text-sm font-bold text-accent-gold">
-                  0{index + 1}
-                </span>
+                <div className="flex items-center justify-between border-b border-primary/10 pb-3">
+                  <span className="font-mono text-xs font-bold text-accent-gold">
+                    [ 0{index + 1} ]
+                  </span>
+                  <span className="border border-primary/20 bg-[#F2F4EF] px-2 py-0.5 font-body text-[10px] font-bold uppercase tracking-wider text-primary">
+                    PJJ Resmi
+                  </span>
+                </div>
+
                 <h3 className="mt-3 font-display text-lg font-medium text-text-primary transition-colors group-hover:text-primary">
                   {path.title}
                 </h3>
@@ -111,8 +119,10 @@ export default function AdmissionCTA() {
                   {path.description}
                 </p>
               </div>
-              <div className="mt-5 border-t border-primary/10 pt-3 text-[11px] font-semibold text-primary uppercase tracking-wider">
-                Jalur Resmi PJJ
+
+              <div className="mt-5 border-t border-primary/10 pt-3 flex items-center justify-between text-[11px] font-semibold text-primary uppercase tracking-wider">
+                <span>Admisi Terbuka</span>
+                <span className="font-mono text-text-secondary font-normal">[ 2026/2027 ]</span>
               </div>
             </article>
           ))}
@@ -150,10 +160,10 @@ export default function AdmissionCTA() {
                     >
                       <span>{faq.question}</span>
                       <span
-                        className="shrink-0 font-display text-xl font-normal text-primary"
+                        className="shrink-0 font-mono text-base font-bold text-primary"
                         aria-hidden="true"
                       >
-                        {isOpen ? '−' : '+'}
+                        {isOpen ? '[ - ]' : '[ + ]'}
                       </span>
                     </button>
                   </h3>
@@ -172,41 +182,53 @@ export default function AdmissionCTA() {
 
         {/* Kontak Resmi & Kantor Pusat */}
         <div id="kontak" className="mt-section-sm grid gap-8 border-t border-primary/15 pt-10 md:grid-cols-2">
-          <div>
-            <p className="font-body text-xs font-semibold uppercase tracking-[0.14em] text-text-secondary mb-2">
+          <div className="border border-primary/15 bg-surface p-6 shadow-sm">
+            <p className="font-body text-xs font-bold uppercase tracking-[0.14em] text-primary mb-3">
               Layanan Informasi & Konsultasi Admisi
             </p>
-            <div className="mt-4 flex flex-col gap-2.5">
+            <p className="font-body text-xs text-text-secondary mb-4">
+              Tim admisi siap membantu konsultasi pemilihan program studi dan teknis pendaftaran perkuliahan daring.
+            </p>
+            <div className="flex flex-col gap-2.5 font-body text-xs">
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
-                className="font-body text-sm font-semibold text-text-primary hover:text-primary transition-colors focus-visible:rounded"
+                className="flex items-center justify-between border border-primary/15 p-2.5 font-semibold text-text-primary hover:border-primary hover:text-primary transition-colors focus-visible:rounded"
               >
-                Email: {CONTACT_EMAIL}
+                <span>Email Admisi: {CONTACT_EMAIL}</span>
+                <span className="font-mono text-[10px] text-text-secondary">[ KIRIM PESAN ]</span>
               </a>
               <a
                 href={`https://wa.me/${CONTACT_WA}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-body text-sm font-semibold text-text-primary hover:text-primary transition-colors focus-visible:rounded"
+                className="flex items-center justify-between border border-primary/15 p-2.5 font-semibold text-text-primary hover:border-primary hover:text-primary transition-colors focus-visible:rounded"
               >
-                WhatsApp: +62 895-3185-1105
+                <span>WhatsApp: +62 895-3185-1105</span>
+                <span className="font-mono text-[10px] text-primary">[ CHAT LANGSUNG ]</span>
               </a>
               <a
                 href="https://t.me/+6281919071707"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-body text-sm font-semibold text-text-primary hover:text-primary transition-colors focus-visible:rounded"
+                className="flex items-center justify-between border border-primary/15 p-2.5 font-semibold text-text-primary hover:border-primary hover:text-primary transition-colors focus-visible:rounded"
               >
-                Telegram Resmi SiberMu
+                <span>Telegram Resmi SiberMu</span>
+                <span className="font-mono text-[10px] text-primary">[ GABUNG KANAL ]</span>
               </a>
             </div>
           </div>
 
-          <address className="font-body text-xs leading-relaxed text-text-secondary not-italic md:border-l md:border-primary/15 md:pl-8">
-            <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.14em] text-text-primary">
+          <address className="border border-primary/15 bg-surface p-6 shadow-sm font-body text-xs leading-relaxed text-text-secondary not-italic">
+            <span className="mb-2 block text-xs font-bold uppercase tracking-[0.14em] text-primary">
               Kantor Pusat Universitas Siber Muhammadiyah
             </span>
-            Jl. Kaliurang KM 5,5 No. 72, Caturtunggal, Depok, Sleman, Daerah Istimewa Yogyakarta 55281
+            <p className="text-text-primary font-medium mb-3">
+              Jl. Kaliurang KM 5,5 No. 72, Caturtunggal, Depok, Sleman, Daerah Istimewa Yogyakarta 55281
+            </p>
+            <div className="border-t border-primary/10 pt-3 text-[11px] text-text-secondary space-y-1">
+              <p>Perguruan Tinggi Swasta PJJ di bawah Pimpinan Pusat Muhammadiyah.</p>
+              <p>Surat Keputusan Mendikbudristek RI No. 430/E/O/2021.</p>
+            </div>
           </address>
         </div>
       </div>
