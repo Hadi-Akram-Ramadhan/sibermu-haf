@@ -18,7 +18,7 @@ const config: Config = {
         'accent-gold': 'var(--color-accent-gold)',
       },
       fontFamily: {
-        display: ['var(--font-fraunces)', 'Georgia', 'serif'],
+        display: ['var(--font-outfit)', 'var(--font-plus-jakarta)', 'system-ui', 'sans-serif'],
         body: ['var(--font-plus-jakarta)', 'system-ui', 'sans-serif'],
       },
       // Skala tipografi dramatis untuk headline

@@ -406,12 +406,12 @@ export default function Hero() {
             className="leading-[1.1] tracking-tight"
           >
             <div className="overflow-hidden">
-              <span className="block hero-line font-display text-[clamp(2.3rem,4.4vw,4rem)] font-medium text-text-primary">
+              <span className="block hero-line font-display text-[clamp(2.3rem,4.4vw,4rem)] font-extrabold tracking-tight text-text-primary">
                 Kuliah di mana saja,
               </span>
             </div>
             <div className="overflow-hidden">
-              <span className="block hero-line font-display text-[clamp(2.1rem,4.2vw,3.7rem)] font-normal italic text-primary">
+              <span className="block hero-line font-display text-[clamp(2.1rem,4.2vw,3.7rem)] font-extrabold tracking-tight text-primary">
                 ijazah yang nyata.
               </span>
             </div>

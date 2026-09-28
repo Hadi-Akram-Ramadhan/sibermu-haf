@@ -21,9 +21,7 @@ vi.mock('@/lib/gsap', () => ({
   prefersReducedMotion: vi.fn(),
 }));
 
-vi.mock('@splinetool/react-spline', () => ({
-  default: () => <div data-testid="spline-scene" />,
-}));
+vi.mock('@google/model-viewer', () => ({}));
 
 import { prefersReducedMotion } from '@/lib/gsap';
 

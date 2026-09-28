@@ -1,17 +1,19 @@
 import type { Metadata } from 'next';
-import { Fraunces, Plus_Jakarta_Sans } from 'next/font/google';
+import { Outfit, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 
-const fraunces = Fraunces({
+const outfit = Outfit({
   subsets: ['latin'],
-  variable: '--font-fraunces',
+  variable: '--font-outfit',
   display: 'swap',
+  weight: ['400', '500', '600', '700', '800', '900'],
 });
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-plus-jakarta',
   display: 'swap',
+  weight: ['400', '500', '600', '700'],
 });
 
 export const metadata: Metadata = {
@@ -34,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className={`${fraunces.variable} ${plusJakartaSans.variable}`}>
+    <html lang="id" className={`${outfit.variable} ${plusJakartaSans.variable}`}>
       <body className="min-h-screen bg-background text-text-primary antialiased paper-grain">
         {children}
       </body>
