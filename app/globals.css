@@ -84,3 +84,25 @@ body {
 .animate-float-delayed {
   animation: float 4.5s ease-in-out 1.5s infinite;
 }
+
+/* Haoqi-inspired Blueprint Grid Canvas */
+.blueprint-grid {
+  background-size: 48px 48px;
+  background-image: 
+    linear-gradient(to right, rgba(11, 93, 59, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(11, 93, 59, 0.05) 1px, transparent 1px);
+}
+
+.blueprint-crosshair {
+  position: relative;
+}
+.blueprint-crosshair::before,
+.blueprint-crosshair::after {
+  content: '+';
+  position: absolute;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  color: rgba(11, 93, 59, 0.35);
+  line-height: 1;
+  pointer-events: none;
+}
