@@ -196,9 +196,6 @@ export default function Programs() {
                     : 'border-primary/20 hover:border-accent-gold shadow-[4px_4px_0_0_rgba(131,93,18,0.12)] hover:shadow-[6px_6px_0_0_#835D12]',
                 ].join(' ')}
               >
-                {/* Corner Crosshairs */}
-                <span className="absolute top-2 right-2 font-mono text-[10px] text-primary/30 select-none" aria-hidden="true">+</span>
-
                 <div>
                   <div className="flex items-center justify-between border-b border-primary/10 pb-3.5">
                     <span className="font-mono text-xs font-bold text-accent-gold tracking-wide">

@@ -9,9 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: 'var(--color-background)',
-        surface: 'var(--color-surface)',
-        primary: 'var(--color-primary)',
+        background: 'rgb(var(--color-background-rgb, 250 250 247) / <alpha-value>)',
+        surface: 'rgb(var(--color-surface-rgb, 255 255 255) / <alpha-value>)',
+        primary: 'rgb(var(--color-primary-rgb, 11 93 59) / <alpha-value>)',
         'primary-hover': 'var(--color-primary-hover)',
         'text-primary': 'var(--color-text-primary)',
         'text-secondary': 'var(--color-text-secondary)',

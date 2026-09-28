@@ -100,12 +100,11 @@ export default function AdmissionCTA() {
               key={path.id}
               className="group relative flex flex-col justify-between border-2 border-primary/20 bg-surface p-6 transition-all duration-200 hover:-translate-y-1 shadow-[4px_4px_0_0_rgba(11,93,59,0.1)] hover:shadow-[6px_6px_0_0_#0B5D3B]"
             >
-              <span className="absolute top-2 right-2 font-mono text-[10px] text-primary/30 select-none" aria-hidden="true">+</span>
 
               <div>
                 <div className="flex items-center justify-between border-b border-primary/10 pb-3">
                   <span className="font-mono text-xs font-bold text-accent-gold">
-                    [ 0{index + 1} ]
+                    0{index + 1}
                   </span>
                   <span className="border border-primary/20 bg-[#F2F4EF] px-2 py-0.5 font-body text-[10px] font-bold uppercase tracking-wider text-primary">
                     PJJ Resmi
@@ -122,7 +121,7 @@ export default function AdmissionCTA() {
 
               <div className="mt-5 border-t border-primary/10 pt-3 flex items-center justify-between text-[11px] font-semibold text-primary uppercase tracking-wider">
                 <span>Admisi Terbuka</span>
-                <span className="font-mono text-text-secondary font-normal">[ 2026/2027 ]</span>
+                <span className="font-mono text-text-secondary font-normal">Tahun 2026/2027</span>
               </div>
             </article>
           ))}
@@ -160,10 +159,10 @@ export default function AdmissionCTA() {
                     >
                       <span>{faq.question}</span>
                       <span
-                        className="shrink-0 font-mono text-base font-bold text-primary"
+                        className="shrink-0 font-body text-xs font-bold text-primary border border-primary/20 px-2 py-0.5"
                         aria-hidden="true"
                       >
-                        {isOpen ? '[ - ]' : '[ + ]'}
+                        {isOpen ? 'Tutup' : 'Buka'}
                       </span>
                     </button>
                   </h3>
@@ -195,7 +194,7 @@ export default function AdmissionCTA() {
                 className="flex items-center justify-between border border-primary/15 p-2.5 font-semibold text-text-primary hover:border-primary hover:text-primary transition-colors focus-visible:rounded"
               >
                 <span>Email Admisi: {CONTACT_EMAIL}</span>
-                <span className="font-mono text-[10px] text-text-secondary">[ KIRIM PESAN ]</span>
+                <span className="font-mono text-[11px] text-text-secondary">Kirim Pesan</span>
               </a>
               <a
                 href={`https://wa.me/${CONTACT_WA}`}
@@ -204,7 +203,7 @@ export default function AdmissionCTA() {
                 className="flex items-center justify-between border border-primary/15 p-2.5 font-semibold text-text-primary hover:border-primary hover:text-primary transition-colors focus-visible:rounded"
               >
                 <span>WhatsApp: +62 895-3185-1105</span>
-                <span className="font-mono text-[10px] text-primary">[ CHAT LANGSUNG ]</span>
+                <span className="font-mono text-[11px] text-primary font-bold">Chat Langsung</span>
               </a>
               <a
                 href="https://t.me/+6281919071707"
@@ -213,7 +212,7 @@ export default function AdmissionCTA() {
                 className="flex items-center justify-between border border-primary/15 p-2.5 font-semibold text-text-primary hover:border-primary hover:text-primary transition-colors focus-visible:rounded"
               >
                 <span>Telegram Resmi SiberMu</span>
-                <span className="font-mono text-[10px] text-primary">[ GABUNG KANAL ]</span>
+                <span className="font-mono text-[11px] text-primary font-bold">Gabung Kanal</span>
               </a>
             </div>
           </div>

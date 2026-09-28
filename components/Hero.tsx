@@ -96,6 +96,8 @@ export default function Hero() {
   const rootRef = useRef<HTMLDivElement>(null);
   const ledgerRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mousePos = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
   const [activeFaculty, setActiveFaculty] = useState<FacultyFilter>('ALL');
   const [hoveredProgram, setHoveredProgram] = useState<string>('inf');
 
@@ -104,13 +106,207 @@ export default function Hero() {
       ? PROGRAM_PREVIEWS
       : PROGRAM_PREVIEWS.filter((p) => p.faculty === activeFaculty);
 
+  // 1. Interactive Generative Shapes Canvas (why.zero.university inspired)
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || typeof canvas.getContext !== 'function') return;
+    let ctx: CanvasRenderingContext2D | null = null;
+    try {
+      ctx = canvas.getContext('2d');
+    } catch {
+      return;
+    }
+    if (!ctx) return;
+
+    let animId: number;
+    let width = (canvas.width = canvas.parentElement?.clientWidth || window.innerWidth);
+    let height = (canvas.height = canvas.parentElement?.clientHeight || window.innerHeight);
+
+    const handleResize = () => {
+      if (!canvas || !canvas.parentElement) return;
+      width = canvas.width = canvas.parentElement.clientWidth;
+      height = canvas.height = canvas.parentElement.clientHeight;
+    };
+    window.addEventListener('resize', handleResize);
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.clientX - rect.left;
+      const clientY = e.clientY - rect.top;
+      mousePos.current.targetX = (clientX - width / 2) * 0.035;
+      mousePos.current.targetY = (clientY - height / 2) * 0.035;
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+
+    // Palet warna resmi SiberMu: Emerald, Gold, Mint, Forest
+    const COLORS = [
+      'rgba(11, 93, 59, ',   // Emerald Primary
+      'rgba(131, 93, 18, ',  // Accent Gold
+      'rgba(16, 185, 129, ', // Mint
+      'rgba(34, 197, 94, ',  // Fresh Green
+      'rgba(217, 119, 6, ',  // Amber Warm
+    ];
+
+    interface Particle {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      size: number;
+      rotation: number;
+      vRot: number;
+      type: 'circle' | 'ring' | 'triangle' | 'polygon' | 'blob';
+      color: string;
+      alpha: number;
+    }
+
+    const SHAPE_COUNT = Math.min(24, Math.max(14, Math.floor(width / 75)));
+    const particles: Particle[] = [];
+
+    for (let i = 0; i < SHAPE_COUNT; i++) {
+      const typeChoice = ['circle', 'ring', 'triangle', 'polygon', 'blob'][
+        Math.floor(Math.random() * 5)
+      ] as Particle['type'];
+
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.45,
+        vy: (Math.random() - 0.5) * 0.45,
+        size: Math.random() * 38 + 14,
+        rotation: Math.random() * Math.PI * 2,
+        vRot: (Math.random() - 0.5) * 0.012,
+        type: typeChoice,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        alpha: Math.random() * 0.22 + 0.08,
+      });
+    }
+
+    const drawBlob = (c: CanvasRenderingContext2D, size: number) => {
+      c.beginPath();
+      const points = 6;
+      for (let i = 0; i <= points; i++) {
+        const angle = (i / points) * Math.PI * 2;
+        const rad = size * (0.8 + Math.sin(angle * 3) * 0.2);
+        const px = Math.cos(angle) * rad;
+        const py = Math.sin(angle) * rad;
+        if (i === 0) c.moveTo(px, py);
+        else c.lineTo(px, py);
+      }
+      c.closePath();
+      c.fill();
+    };
+
+    const drawPolygon = (c: CanvasRenderingContext2D, sides: number, radius: number) => {
+      c.beginPath();
+      for (let i = 0; i < sides; i++) {
+        const a = (i / sides) * Math.PI * 2;
+        const px = Math.cos(a) * radius;
+        const py = Math.sin(a) * radius;
+        if (i === 0) c.moveTo(px, py);
+        else c.lineTo(px, py);
+      }
+      c.closePath();
+      c.stroke();
+    };
+
+    const renderLoop = () => {
+      mousePos.current.x += (mousePos.current.targetX - mousePos.current.x) * 0.05;
+      mousePos.current.y += (mousePos.current.targetY - mousePos.current.y) * 0.05;
+
+      ctx.clearRect(0, 0, width, height);
+
+      // Garis konstelasi antar partikel terdekat
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 130) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(11, 93, 59, ${0.12 * (1 - dist / 130)})`;
+            ctx.lineWidth = 0.8;
+            ctx.moveTo(particles[i].x + mousePos.current.x, particles[i].y + mousePos.current.y);
+            ctx.lineTo(particles[j].x + mousePos.current.x, particles[j].y + mousePos.current.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Render setiap bentuk acak
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rotation += p.vRot;
+
+        if (p.x < -p.size) p.x = width + p.size;
+        if (p.x > width + p.size) p.x = -p.size;
+        if (p.y < -p.size) p.y = height + p.size;
+        if (p.y > height + p.size) p.y = -p.size;
+
+        const posX = p.x + mousePos.current.x;
+        const posY = p.y + mousePos.current.y;
+
+        ctx.save();
+        ctx.translate(posX, posY);
+        ctx.rotate(p.rotation);
+
+        switch (p.type) {
+          case 'circle':
+            ctx.beginPath();
+            ctx.fillStyle = `${p.color}${p.alpha})`;
+            ctx.arc(0, 0, p.size * 0.45, 0, Math.PI * 2);
+            ctx.fill();
+            break;
+          case 'ring':
+            ctx.beginPath();
+            ctx.strokeStyle = `${p.color}${p.alpha * 1.5})`;
+            ctx.lineWidth = 1.4;
+            ctx.arc(0, 0, p.size * 0.55, 0, Math.PI * 2);
+            ctx.stroke();
+            break;
+          case 'triangle':
+            ctx.strokeStyle = `${p.color}${p.alpha * 1.6})`;
+            ctx.lineWidth = 1.2;
+            drawPolygon(ctx, 3, p.size * 0.6);
+            break;
+          case 'polygon':
+            ctx.strokeStyle = `${p.color}${p.alpha * 1.4})`;
+            ctx.lineWidth = 1.2;
+            drawPolygon(ctx, 6, p.size * 0.55);
+            break;
+          case 'blob':
+            ctx.fillStyle = `${p.color}${p.alpha * 0.85})`;
+            drawBlob(ctx, p.size * 0.45);
+            break;
+        }
+
+        ctx.restore();
+      }
+
+      animId = requestAnimationFrame(renderLoop);
+    };
+
+    if (!prefersReducedMotion()) {
+      animId = requestAnimationFrame(renderLoop);
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      cancelAnimationFrame(animId);
+    };
+  }, []);
+
+  // 2. GSAP Entrance and Parallax
   useEffect(() => {
     if (!rootRef.current || prefersReducedMotion()) return;
 
     registerGsap();
 
     const ctx = gsap.context(() => {
-      // 1. Scroll-reveal per baris headline
+      // Reveal headline per baris
       gsap.from('.hero-line', {
         yPercent: 105,
         opacity: 0,
@@ -120,17 +316,17 @@ export default function Hero() {
         delay: 0.05,
       });
 
-      // 2. Reveal metadata & CTA stagger setelah headline
+      // Reveal detail, buttons, dan direktori
       gsap.from('.hero-detail', {
         opacity: 0,
         y: 18,
         duration: 0.65,
         stagger: 0.09,
         ease: 'power2.out',
-        delay: 0.45,
+        delay: 0.35,
       });
 
-      // 3. Parallax halus pada ledger card
+      // Parallax halus pada ledger card
       if (ledgerRef.current) {
         gsap.to(ledgerRef.current, {
           y: -24,
@@ -144,10 +340,10 @@ export default function Hero() {
         });
       }
 
-      // 4. Headline subtle opacity scrub saat scroll
+      // Headline scrub opacity saat scroll
       if (headlineRef.current) {
         gsap.to(headlineRef.current, {
-          opacity: 0.2,
+          opacity: 0.25,
           ease: 'none',
           scrollTrigger: {
             trigger: rootRef.current,
@@ -165,102 +361,126 @@ export default function Hero() {
   return (
     <section
       ref={rootRef}
+      id="overview"
       className="relative min-h-[92vh] bg-[#F7F8F4] pt-24 pb-16 md:pt-32 md:pb-24 border-b border-primary/15 overflow-hidden"
       aria-labelledby="hero-heading"
     >
-      {/* Ambient backdrop */}
-      <div
+      {/* Canvas Bentuk Acak Interaktif (why.zero.university inspired) */}
+      <canvas
+        ref={canvasRef}
         aria-hidden="true"
-        className="pointer-events-none absolute right-0 top-0 h-[60%] w-[45%] opacity-[0.04]"
-        style={{
-          background:
-            'radial-gradient(ellipse 80% 60% at 100% 0%, rgba(11,93,59,1) 0%, transparent 70%)',
-        }}
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-70"
       />
 
-      {/* Strip Telemetri Akademik Resmi */}
-      <div className="mx-auto max-w-7xl px-5 pb-8 md:px-10">
-        <div className="flex items-center justify-between border-b border-primary/15 pb-3 font-body text-[11px] uppercase tracking-[0.14em] text-text-secondary hero-detail">
-          <span>[ SIBERMU • PENDIDIKAN TINGGI JARAK JAUH ]</span>
-          <span className="hidden sm:inline-block">Izin Resmi Kemendikbudristek RI</span>
-          <span>[ YOGYAKARTA / INDONESIA ]</span>
-        </div>
+      {/* Radiant Mesh Atmosphere Backdrop */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+      >
+        <div
+          className="absolute -top-[15%] left-1/2 -translate-x-1/2 h-[120%] w-[130%] max-w-none opacity-45 blur-3xl pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(ellipse 110vw 85vh at 50% 30%, rgba(16,185,129,0.18) 0%, rgba(11,93,59,0.11) 40%, rgba(131,93,18,0.06) 70%, transparent 100%)',
+          }}
+        />
       </div>
 
       {/* Grid Dua Kolom Editorial */}
-      <div className="mx-auto grid max-w-7xl items-start gap-12 px-5 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 md:px-10">
+      <div className="relative z-10 mx-auto grid max-w-7xl items-start gap-12 px-5 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 md:px-10">
         {/* Kolom Kiri: Tipografi Editorial & Value Proposition Kemahasiswaan & AIK */}
         <div className="flex flex-col justify-center pt-2">
-          <div className="inline-flex items-center gap-2 mb-3 hero-line">
-            <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
-            <p className="font-body text-xs font-bold uppercase tracking-[0.14em] text-primary">
-              Biro Kemahasiswaan & Al-Islam Kemuhammadiyahan (AIK)
-            </p>
+          <div className="inline-flex items-center gap-3 mb-4 hero-line">
+            <span className="font-body text-xs font-bold uppercase tracking-[0.16em] text-primary">
+              Biro Kemahasiswaan & AIK
+            </span>
+            <span className="h-3 w-px bg-primary/25" aria-hidden="true" />
+            <span className="text-xs font-body font-medium text-text-secondary">
+              Universitas Siber Muhammadiyah
+            </span>
           </div>
 
           <h1
             id="hero-heading"
             ref={headlineRef}
-            className="leading-[1.12] tracking-tight"
+            className="leading-[1.1] tracking-tight"
           >
             <div className="overflow-hidden">
-              <span className="block hero-line font-display text-[clamp(2.1rem,4vw,3.6rem)] font-medium text-text-primary">
-                Sinergi Prestasi Mahasiswa,
+              <span className="block hero-line font-display text-[clamp(2.3rem,4.4vw,4rem)] font-medium text-text-primary">
+                Kuliah di mana saja,
               </span>
             </div>
             <div className="overflow-hidden">
-              <span className="block hero-line font-display text-[clamp(1.9rem,3.6vw,3.1rem)] font-normal italic text-primary">
-                Karakter Luhur Berkemajuan,
+              <span className="block hero-line font-display text-[clamp(2.1rem,4.2vw,3.7rem)] font-normal italic text-primary">
+                ijazah yang nyata.
               </span>
             </div>
-            <div className="overflow-hidden">
-              <span className="block hero-line font-display text-[clamp(1.7rem,3.1vw,2.6rem)] font-medium text-text-primary">
-                Menebar Manfaat di Ruang Siber.
+            <div className="overflow-hidden mt-1">
+              <span className="block hero-line font-display text-[clamp(1.4rem,2.4vw,2.1rem)] font-medium text-text-primary/90">
+                Sinergi Prestasi Mahasiswa & Karakter Berkemajuan di Ruang Siber.
               </span>
             </div>
           </h1>
 
           <p className="mt-5 max-w-xl font-body text-base leading-relaxed text-text-secondary hero-detail">
-            Portal terpadu mahasiswa Universitas Siber Muhammadiyah: wahana pembinaan organisasi, eksplorasi minat bakat UKM siber, pemacuan prestasi nasional, layanan mahasiswa responsif, serta penempaan spiritualitas Al-Islam dan Kemuhammadiyahan.
+            Portal terpadu mahasiswa Universitas Siber Muhammadiyah: wadah pembinaan organisasi mahasiswa, eksplorasi talenta di unit kegiatan siber, pemacuan prestasi nasional, layanan mahasiswa responsif, serta penempaan spiritualitas Al-Islam dan Kemuhammadiyahan.
           </p>
 
           {/* Quick Dual-Pillar Shortcuts */}
           <div className="mt-4 flex flex-wrap gap-2 hero-detail">
             <a
               href="#kemahasiswaan"
-              className="inline-flex items-center gap-1.5 border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-mono font-bold uppercase tracking-[0.08em] text-primary hover:bg-primary hover:text-surface transition-colors"
+              className="inline-flex items-center border border-primary/30 bg-primary/10 px-3.5 py-1.5 text-xs font-body font-semibold uppercase tracking-[0.06em] text-primary hover:bg-primary hover:text-surface transition-colors"
             >
-              <span>› Pilar Kemahasiswaan</span>
+              Pilar Kemahasiswaan
             </a>
             <a
               href="#aik"
-              className="inline-flex items-center gap-1.5 border border-accent-gold/40 bg-accent-gold/15 px-3 py-1 text-xs font-mono font-bold uppercase tracking-[0.08em] text-accent-gold hover:bg-accent-gold hover:text-background transition-colors"
+              className="inline-flex items-center border border-accent-gold/40 bg-accent-gold/15 px-3.5 py-1.5 text-xs font-body font-semibold uppercase tracking-[0.06em] text-accent-gold hover:bg-accent-gold hover:text-background transition-colors"
             >
-              <span>› Pilar Al-Islam & AIK</span>
+              Pilar Al-Islam & AIK
             </a>
             <a
               href="#layanan"
-              className="inline-flex items-center gap-1.5 border border-primary/30 bg-surface px-3 py-1 text-xs font-mono font-semibold uppercase tracking-[0.08em] text-text-secondary hover:text-primary transition-colors"
+              className="inline-flex items-center border border-primary/20 bg-surface px-3.5 py-1.5 text-xs font-body font-semibold uppercase tracking-[0.06em] text-text-secondary hover:text-primary hover:border-primary/40 transition-colors"
             >
-              <span>› Layanan Mahasiswa</span>
+              Layanan Mahasiswa
             </a>
           </div>
 
-          {/* Legalitas Resmi Terverifikasi */}
-          <dl className="mt-6 grid max-w-lg grid-cols-2 gap-4 border-t border-primary/15 pt-5 hero-detail">
-            <div className="border-l-2 border-primary pl-4 bg-surface/50 py-2">
-              <dt className="font-body text-[11px] uppercase tracking-[0.1em] text-text-secondary">
-                Izin Kemendikbudristek
+          {/* Legalitas Resmi Terverifikasi: 4 Bento Badges Bersih */}
+          <dl className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 border-t border-primary/15 pt-5 hero-detail">
+            <div className="border-l-2 border-primary pl-3 bg-surface/70 backdrop-blur-sm py-2">
+              <dt className="font-body text-[10px] uppercase tracking-[0.08em] text-text-secondary">
+                Izin Operasional
               </dt>
-              <dd className="mt-1 font-body text-sm font-bold text-text-primary">
-                SK No. 430/E/O/2021
+              <dd className="mt-0.5 font-display text-xs sm:text-sm font-bold text-text-primary">
+                SK 430/E/O/2021
               </dd>
             </div>
-            <div className="border-l-2 border-accent-gold pl-4 bg-surface/50 py-2">
-              <dt className="font-body text-[11px] uppercase tracking-[0.1em] text-text-secondary">
-                Akreditasi Institusi
+            <div className="border-l-2 border-accent-gold pl-3 bg-surface/70 backdrop-blur-sm py-2">
+              <dt className="font-body text-[10px] uppercase tracking-[0.08em] text-text-secondary">
+                Akreditasi BAN-PT
               </dt>
-              <dd className="mt-1 font-body text-sm font-bold text-text-primary">BAIK (BAN-PT)</dd>
+              <dd className="mt-0.5 font-display text-xs sm:text-sm font-bold text-text-primary">
+                BAIK (Nasional)
+              </dd>
+            </div>
+            <div className="border-l-2 border-primary pl-3 bg-surface/70 backdrop-blur-sm py-2">
+              <dt className="font-body text-[10px] uppercase tracking-[0.08em] text-text-secondary">
+                Sistem Kuliah
+              </dt>
+              <dd className="mt-0.5 font-display text-xs sm:text-sm font-bold text-text-primary">
+                100% Online PJJ
+              </dd>
+            </div>
+            <div className="border-l-2 border-accent-gold pl-3 bg-surface/70 backdrop-blur-sm py-2">
+              <dt className="font-body text-[10px] uppercase tracking-[0.08em] text-text-secondary">
+                Program Sarjana
+              </dt>
+              <dd className="mt-0.5 font-display text-xs sm:text-sm font-bold text-text-primary">
+                6 Prodi S1
+              </dd>
             </div>
           </dl>
 
@@ -282,9 +502,8 @@ export default function Hero() {
             </a>
           </div>
 
-          <p className="mt-4 font-body text-xs text-text-secondary hero-detail flex items-center gap-2">
-            <span className="font-mono text-primary font-semibold">[i]</span>
-            Biaya kuliah transparan dapat dicicil per semester tanpa pungutan gedung tambahan.
+          <p className="mt-4 font-body text-xs text-text-secondary hero-detail">
+            Biaya kuliah transparan dapat dicicil per semester tanpa uang gedung tambahan.
           </p>
         </div>
 
@@ -292,12 +511,6 @@ export default function Hero() {
         <div ref={ledgerRef} className="hero-detail flex flex-col gap-5">
           {/* 1. Frame Fotografi Mahasiswa PJJ SiberMu */}
           <div className="group relative border-2 border-primary/20 bg-surface p-2.5 shadow-[6px_6px_0_0_#0B5D3B] transition-all duration-300 hover:shadow-[8px_8px_0_0_#0B5D3B]">
-            {/* Corner Crosshairs Tactile Editorial */}
-            <span className="absolute -top-1.5 -left-1.5 font-mono text-xs font-bold text-primary select-none" aria-hidden="true">+</span>
-            <span className="absolute -top-1.5 -right-1.5 font-mono text-xs font-bold text-primary select-none" aria-hidden="true">+</span>
-            <span className="absolute -bottom-1.5 -left-1.5 font-mono text-xs font-bold text-primary select-none" aria-hidden="true">+</span>
-            <span className="absolute -bottom-1.5 -right-1.5 font-mono text-xs font-bold text-primary select-none" aria-hidden="true">+</span>
-
             <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden bg-background">
               <Image
                 src="/images/hero-student-indonesia.jpg"
@@ -309,13 +522,12 @@ export default function Hero() {
               />
 
               {/* Badges Material di atas foto */}
-              <div className="absolute top-3 left-3 flex items-center gap-2 border border-primary/20 bg-surface/95 px-3 py-1 font-body text-[11px] font-semibold uppercase tracking-wider text-text-primary shadow-sm backdrop-blur-sm">
-                <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
-                <span>Pendidikan Jarak Jauh (PJJ)</span>
+              <div className="absolute top-3 left-3 border border-primary/20 bg-surface/95 px-3 py-1 font-body text-[11px] font-semibold uppercase tracking-wider text-text-primary shadow-sm backdrop-blur-sm">
+                Pendidikan Jarak Jauh (PJJ)
               </div>
 
               <div className="absolute bottom-3 right-3 border border-primary/20 bg-surface/95 px-2.5 py-1 font-body text-[10px] font-semibold uppercase tracking-wider text-text-secondary shadow-sm backdrop-blur-sm">
-                [ Yogyakarta / Online ]
+                Yogyakarta • Online
               </div>
             </div>
 

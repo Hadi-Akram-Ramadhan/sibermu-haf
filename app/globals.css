@@ -4,8 +4,11 @@
 
 :root {
   --color-background: #fafaf7;
+  --color-background-rgb: 250 250 247;
   --color-surface: #ffffff;
+  --color-surface-rgb: 255 255 255;
   --color-primary: #0b5d3b;
+  --color-primary-rgb: 11 93 59;
   --color-primary-hover: #146c4d;
   --color-text-primary: #1a1f1c;
   --color-text-secondary: #5b6560;
@@ -63,4 +66,21 @@ body {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1.5deg);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 4.5s ease-in-out 1.5s infinite;
 }

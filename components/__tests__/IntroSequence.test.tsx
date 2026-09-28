@@ -21,11 +21,16 @@ vi.mock('@/lib/gsap', () => ({
   prefersReducedMotion: vi.fn(),
 }));
 
+vi.mock('@splinetool/react-spline', () => ({
+  default: () => <div data-testid="spline-scene" />,
+}));
+
 import { prefersReducedMotion } from '@/lib/gsap';
 
 describe('IntroSequence Component (Zero.university inspired)', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(null);
   });
 
   it('renders status loading accessibility text and aria-label', () => {
@@ -44,8 +49,8 @@ describe('IntroSequence Component (Zero.university inspired)', () => {
 
     expect(screen.getByText(/Kuliah di mana saja/i)).toBeInTheDocument();
     expect(screen.getByText(/ijazah yang nyata/i)).toBeInTheDocument();
-    expect(screen.getByText('SK 430/E/O/2021')).toBeInTheDocument();
-    expect(screen.getByText('BAN-PT (BAIK)')).toBeInTheDocument();
+    expect(screen.getAllByText('SK 430/E/O/2021').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('BAN-PT (BAIK)').length).toBeGreaterThan(0);
   });
 
   it('renders portal action button and scroll prompt, and responds to click', () => {

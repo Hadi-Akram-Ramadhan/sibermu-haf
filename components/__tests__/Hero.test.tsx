@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import Hero from '@/components/Hero';
 
@@ -11,6 +11,10 @@ vi.mock('@/lib/gsap', () => ({
 }));
 
 describe('Hero Component', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(null);
+  });
   it('renders hero heading with value proposition', () => {
     render(<Hero />);
     expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
