@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const SOCIAL_LINKS = [
   { label: 'Facebook', href: 'https://www.facebook.com/sibermu' },
   { label: 'Instagram', href: 'https://www.instagram.com/sibermu/' },
@@ -9,26 +11,44 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-primary text-surface border-t border-primary-hover" aria-label="Footer">
+    <footer className="bg-primary text-surface border-t border-primary-hover" aria-label="Footer" id="kontak">
       <div className="mx-auto max-w-7xl px-5 py-14 md:px-10 md:py-20">
         <div className="grid gap-12 md:grid-cols-[1.3fr_0.7fr] md:gap-20">
           <div>
-            <div className="flex items-baseline gap-3">
-              <span className="font-display text-3xl font-medium tracking-tight">SiberMu</span>
-              <span className="font-body text-xs uppercase tracking-[0.14em] text-surface/70">
-                Pendidikan Jarak Jauh
-              </span>
+            <div className="flex flex-col gap-3">
+              <div className="relative h-10 w-[170px] sm:h-12 sm:w-[200px]">
+                <Image
+                  src="/images/logo-sibermu.png"
+                  alt="Universitas Siber Muhammadiyah"
+                  width={300}
+                  height={71}
+                  className="h-full w-auto object-contain brightness-105"
+                />
+              </div>
+              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.14em] text-surface/80">
+                <span className="font-semibold text-accent-gold">Biro Kemahasiswaan & AIK</span>
+                <span>•</span>
+                <span>Pendidikan Siber Jarak Jauh</span>
+              </div>
             </div>
             <p className="mt-4 max-w-lg font-body text-sm leading-relaxed text-surface/80">
-              Universitas Siber Muhammadiyah menyelenggarakan pendidikan tinggi jarak jauh berbasis teknologi digital dengan memadukan keunggulan akademik, fleksibilitas belajar, dan nilai Islam berkemajuan.
+              Pusat layanan kemahasiswaan, pengembangan potensi talenta digital, pembinaan organisasi dan unit kegiatan mahasiswa, serta penguatan dakwah Al-Islam dan Kemuhammadiyahan berbasis siber.
             </p>
-            <div className="mt-6 flex flex-wrap items-center gap-4 text-xs font-body text-surface/70">
+            <div className="mt-6 flex flex-wrap items-center gap-3 text-xs font-body text-surface/70">
               <span className="border border-surface/20 bg-surface/10 px-2.5 py-1">
                 SK Mendikbudristek No. 430/E/O/2021
               </span>
               <span className="border border-surface/20 bg-surface/10 px-2.5 py-1">
                 Akreditasi BAN-PT (BAIK)
               </span>
+              <a
+                href="https://wa.me/6285179946901"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-accent-gold/40 bg-accent-gold/15 px-2.5 py-1 text-accent-gold hover:bg-accent-gold/25 transition-colors font-mono"
+              >
+                Hotline WA: 0851 7994 6901
+              </a>
             </div>
           </div>
 

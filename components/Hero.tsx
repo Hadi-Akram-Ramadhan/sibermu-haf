@@ -189,12 +189,12 @@ export default function Hero() {
 
       {/* Grid Dua Kolom Editorial */}
       <div className="mx-auto grid max-w-7xl items-start gap-12 px-5 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 md:px-10">
-        {/* Kolom Kiri: Tipografi Editorial & Value Proposition */}
+        {/* Kolom Kiri: Tipografi Editorial & Value Proposition Kemahasiswaan & AIK */}
         <div className="flex flex-col justify-center pt-2">
-          <div className="inline-flex items-center gap-2 mb-4 hero-line">
+          <div className="inline-flex items-center gap-2 mb-3 hero-line">
             <span className="h-2 w-2 rounded-full bg-primary" aria-hidden="true" />
-            <p className="font-body text-xs font-semibold uppercase tracking-[0.14em] text-primary">
-              Universitas Siber Muhammadiyah
+            <p className="font-body text-xs font-bold uppercase tracking-[0.14em] text-primary">
+              Biro Kemahasiswaan & Al-Islam Kemuhammadiyahan (AIK)
             </p>
           </div>
 
@@ -204,29 +204,50 @@ export default function Hero() {
             className="leading-[1.12] tracking-tight"
           >
             <div className="overflow-hidden">
-              <span className="block hero-line font-display text-[clamp(2.25rem,4.2vw,3.75rem)] font-medium text-text-primary">
-                Belajar tanpa batas ruang,
+              <span className="block hero-line font-display text-[clamp(2.1rem,4vw,3.6rem)] font-medium text-text-primary">
+                Sinergi Prestasi Mahasiswa,
               </span>
             </div>
             <div className="overflow-hidden">
-              <span className="block hero-line font-display text-[clamp(2rem,3.8vw,3.25rem)] font-normal italic text-primary">
-                ilmu berdaya guna,
+              <span className="block hero-line font-display text-[clamp(1.9rem,3.6vw,3.1rem)] font-normal italic text-primary">
+                Karakter Luhur Berkemajuan,
               </span>
             </div>
             <div className="overflow-hidden">
-              <span className="block hero-line font-display text-[clamp(1.75rem,3.2vw,2.75rem)] font-medium text-text-primary">
-                untuk masa depan Anda.
+              <span className="block hero-line font-display text-[clamp(1.7rem,3.1vw,2.6rem)] font-medium text-text-primary">
+                Menebar Manfaat di Ruang Siber.
               </span>
             </div>
           </h1>
 
-          <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-text-secondary hero-detail">
-            Kuliah Sarjana S1 daring penuh dengan fleksibilitas total. Dirancang bagi Anda yang
-            ingin meraih gelar akademik resmi tanpa meninggalkan karier, keluarga, atau pengabdian masyarakat.
+          <p className="mt-5 max-w-xl font-body text-base leading-relaxed text-text-secondary hero-detail">
+            Portal terpadu mahasiswa Universitas Siber Muhammadiyah: wahana pembinaan organisasi, eksplorasi minat bakat UKM siber, pemacuan prestasi nasional, layanan mahasiswa responsif, serta penempaan spiritualitas Al-Islam dan Kemuhammadiyahan.
           </p>
 
+          {/* Quick Dual-Pillar Shortcuts */}
+          <div className="mt-4 flex flex-wrap gap-2 hero-detail">
+            <a
+              href="#kemahasiswaan"
+              className="inline-flex items-center gap-1.5 border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-mono font-bold uppercase tracking-[0.08em] text-primary hover:bg-primary hover:text-surface transition-colors"
+            >
+              <span>› Pilar Kemahasiswaan</span>
+            </a>
+            <a
+              href="#aik"
+              className="inline-flex items-center gap-1.5 border border-accent-gold/40 bg-accent-gold/15 px-3 py-1 text-xs font-mono font-bold uppercase tracking-[0.08em] text-accent-gold hover:bg-accent-gold hover:text-background transition-colors"
+            >
+              <span>› Pilar Al-Islam & AIK</span>
+            </a>
+            <a
+              href="#layanan"
+              className="inline-flex items-center gap-1.5 border border-primary/30 bg-surface px-3 py-1 text-xs font-mono font-semibold uppercase tracking-[0.08em] text-text-secondary hover:text-primary transition-colors"
+            >
+              <span>› Layanan Mahasiswa</span>
+            </a>
+          </div>
+
           {/* Legalitas Resmi Terverifikasi */}
-          <dl className="mt-6 grid max-w-lg grid-cols-2 gap-4 border-t border-primary/15 pt-6 hero-detail">
+          <dl className="mt-6 grid max-w-lg grid-cols-2 gap-4 border-t border-primary/15 pt-5 hero-detail">
             <div className="border-l-2 border-primary pl-4 bg-surface/50 py-2">
               <dt className="font-body text-[11px] uppercase tracking-[0.1em] text-text-secondary">
                 Izin Kemendikbudristek
@@ -244,7 +265,7 @@ export default function Hero() {
           </dl>
 
           {/* CTA Ganda */}
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row hero-detail">
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row hero-detail">
             <a
               href={ADMISSIONS_URL}
               target="_blank"

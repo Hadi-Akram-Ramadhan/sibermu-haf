@@ -118,6 +118,26 @@ export default function Stats() {
           ))}
         </dl>
 
+        {/* Telemetri Kemahasiswaan & AIK Terpadu */}
+        <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 border border-accent-gold/30 bg-black/20 p-4 sm:p-5 font-mono text-xs">
+          <div className="border-l border-accent-gold/50 pl-3">
+            <span className="text-accent-gold font-bold block text-sm">3 Lembaga</span>
+            <span className="text-surface/70 text-[11px]">BEM, DPM, IMM SiberMu</span>
+          </div>
+          <div className="border-l border-accent-gold/50 pl-3">
+            <span className="text-accent-gold font-bold block text-sm">6 UKM Siber</span>
+            <span className="text-surface/70 text-[11px]">Cyber, AI, Riset & Multimedia</span>
+          </div>
+          <div className="border-l border-accent-gold/50 pl-3">
+            <span className="text-accent-gold font-bold block text-sm">4 Layanan 24/7</span>
+            <span className="text-surface/70 text-[11px]">Konseling, Beasiswa & Surat</span>
+          </div>
+          <div className="border-l border-accent-gold/50 pl-3">
+            <span className="text-accent-gold font-bold block text-sm">AIK Berkelanjutan</span>
+            <span className="text-surface/70 text-[11px]">BAM Daring & Kajian Tarjih</span>
+          </div>
+        </div>
+
         <div className="mt-12 flex items-center justify-between border-t border-white/10 pt-6 font-body text-xs text-surface/50">
           <span>Badan Akreditasi Nasional Perguruan Tinggi (BAN-PT)</span>
           <span className="hidden sm:inline">Persyarikatan Muhammadiyah</span>

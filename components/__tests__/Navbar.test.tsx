@@ -15,9 +15,11 @@ describe('Navbar Component', () => {
     render(<Navbar />);
 
     expect(screen.getByText('SiberMu')).toBeInTheDocument();
-    expect(screen.getAllByRole('link', { name: /program studi/i })[0]).toHaveAttribute('href', '#program');
-    expect(screen.getAllByRole('link', { name: /keunggulan/i })[0]).toHaveAttribute('href', '#keunggulan');
-    expect(screen.getAllByRole('link', { name: /pendaftaran/i })[0]).toHaveAttribute('href', '#jalur-admisi');
+    expect(screen.getAllByRole('link', { name: /kemahasiswaan/i })[0]).toHaveAttribute('href', '#kemahasiswaan');
+    expect(screen.getAllByRole('link', { name: /ormawa & ukm/i })[0]).toHaveAttribute('href', '#ormawa-ukm');
+    expect(screen.getAllByRole('link', { name: /prestasi/i })[0]).toHaveAttribute('href', '#prestasi');
+    expect(screen.getAllByRole('link', { name: /layanan/i })[0]).toHaveAttribute('href', '#layanan');
+    expect(screen.getAllByRole('link', { name: /al-islam & aik/i })[0]).toHaveAttribute('href', '#aik');
     expect(screen.getAllByRole('link', { name: /kontak/i })[0]).toHaveAttribute('href', '#kontak');
   });
 

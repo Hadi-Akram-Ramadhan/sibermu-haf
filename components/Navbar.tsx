@@ -1,14 +1,18 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
 const ADMISSIONS_URL = process.env.NEXT_PUBLIC_ADMISSIONS_URL ?? 'https://admissions.sibermu.ac.id/';
 
 const NAV_LINKS = [
-  { label: 'Program Studi', href: '#program' },
-  { label: 'Keunggulan', href: '#keunggulan' },
-  { label: 'Pendaftaran', href: '#jalur-admisi' },
+  { label: 'Kemahasiswaan', href: '#kemahasiswaan' },
+  { label: 'Ormawa & UKM', href: '#ormawa-ukm' },
+  { label: 'Prestasi', href: '#prestasi' },
+  { label: 'Layanan', href: '#layanan' },
+  { label: 'Al-Islam & AIK', href: '#aik' },
+  { label: 'Kajian & Syiar', href: '#syiar-kajian' },
   { label: 'Kontak', href: '#kontak' },
 ];
 
@@ -55,34 +59,44 @@ export default function Navbar() {
       ].join(' ')}
     >
       <nav
-        className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3.5 md:px-10"
+        className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2.5 sm:px-6 md:px-10"
         aria-label="Navigasi utama"
       >
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <Link
             href="/"
-            className="flex items-baseline gap-2 font-display focus-visible:rounded"
+            className="flex items-center gap-3 group focus-visible:rounded"
             aria-label="Universitas Siber Muhammadiyah, kembali ke beranda"
           >
-            <span className="text-xl font-bold tracking-tight text-primary">
-              SiberMu
-            </span>
-            <span className="hidden sm:inline text-xs font-body uppercase tracking-[0.14em] text-text-secondary">
-              Univ. Siber Muhammadiyah
-            </span>
+            <div className="relative h-9 w-[150px] sm:h-10 sm:w-[168px] transition-transform duration-200 group-hover:scale-[1.02]">
+              <Image
+                src="/images/logo-sibermu-dark.png"
+                alt="Universitas Siber Muhammadiyah"
+                width={300}
+                height={71}
+                priority
+                className="h-full w-auto object-contain"
+              />
+            </div>
+            <span className="sr-only">SiberMu</span>
           </Link>
-          <span className="hidden lg:inline-block h-3.5 w-px bg-primary/20" aria-hidden="true" />
-          <span className="hidden lg:inline text-[11px] font-body uppercase tracking-[0.12em] text-text-secondary">
-            PJJ S1 Online Resmi
-          </span>
+          <span className="hidden xl:inline-block h-4 w-px bg-primary/20" aria-hidden="true" />
+          <div className="hidden xl:flex flex-col">
+            <span className="text-[11px] font-bold font-display uppercase tracking-[0.14em] text-primary">
+              Biro Kemahasiswaan & AIK
+            </span>
+            <span className="text-[9.5px] font-body text-text-muted uppercase tracking-[0.1em]">
+              Sinergi Prestasi & Karakter Berkemajuan
+            </span>
+          </div>
         </div>
 
-        <ul className="hidden md:flex items-center gap-8 list-none m-0 p-0" role="list">
+        <ul className="hidden lg:flex items-center gap-5 xl:gap-6 list-none m-0 p-0" role="list">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="font-body text-xs font-semibold uppercase tracking-[0.12em] text-text-secondary transition-colors hover:text-primary focus-visible:rounded"
+                className="font-body text-[11.5px] font-semibold uppercase tracking-[0.1em] text-text-secondary transition-colors hover:text-primary focus-visible:rounded"
               >
                 {link.label}
               </Link>
@@ -95,7 +109,7 @@ export default function Navbar() {
             href={ADMISSIONS_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center bg-primary px-4 py-2 font-body text-xs font-semibold uppercase tracking-[0.12em] text-surface transition-colors hover:bg-primary-hover focus-visible:rounded"
+            className="inline-flex items-center bg-primary px-4 py-2 font-body text-xs font-semibold uppercase tracking-[0.12em] text-surface transition-colors hover:bg-primary-hover focus-visible:rounded shadow-sm"
           >
             Daftar Sekarang
           </a>
